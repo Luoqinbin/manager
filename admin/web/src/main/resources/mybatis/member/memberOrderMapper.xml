@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+
+<mapper namespace="com.badminton.member.mapper.MemberOrderMapper">
+    <select id="query" parameterType="map" resultType="com.badminton.entity.member.query.MemberOrderRechargeQuery">
+        select mo.id, mi.number,mi.`name`,mi.type,mi.phone,mi.account,mo.balance,mo.created_dt,mo.source,mo.state,mo.pay_type,mo.operate_type from member_info mi,member_order mo where mi.id=mo.member_id
+      <if test="phone!=null and phone !=''">
+            and mo.phone = #{phone}
+        </if>
+        <if test="cardNo!=null and cardNo !=''">
+            and mi.number=#{cardNo}
+        </if>
+        <if test="startTimeQuery!=null and startTimeQuery !=''">
+            and mo.created_dt like  CONCAT(#{startTimeQuery},'%')
+        </if>
+
+    </select>
+
+</mapper>

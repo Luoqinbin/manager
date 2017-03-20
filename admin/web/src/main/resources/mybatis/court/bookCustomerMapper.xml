@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+
+<mapper namespace="com.badminton.court.mapper.BookCustomerMapper">
+    <select id="query" resultType="com.badminton.entity.court.query.BookCustomerInfoQuery" parameterType="map">
+        select v.*,
+        bc.id as id,
+        bc.mobile AS phone,
+        bc.person AS psersion,
+        bc.price AS price,
+        bc.created_dt AS createdDt,
+        bc.pay_type as payType ,
+        bc.person as person
+        from book_customer bc ,( SELECT
+        c.id AS cid,
+        cp.id as pid,
+        c. NAME AS NAME,
+        c.area AS area,
+        cp.start_time AS startTime,
+        cp.end_time AS endTime
+        FROM
+        court_info c,
+        court_product cp
+        WHERE
+        c.id = cp.court_id) v where bc.product_id = v.pid
+        <if test="phone!=null and phone != ''">
+           and bc.mobile = #{phone}
+        </if>
+        <if test="createdDtQuery!=null and createdDtQuery != ''">
+            <![CDATA[
+            and bc.created_dt >= '${createdDtQuery}'  and  bc.created_dt<= CONCAT('${createdDtQuery}','23:59:59')
+            ]]>
+        </if>
+        <if test="area!=null and area != ''">
+            and v.area = #{area}
+        </if>
+        <if test="nameInfo!=null and nameInfo != ''">
+            and v.name = #{nameInfo}
+        </if>
+    </select>
+</mapper>

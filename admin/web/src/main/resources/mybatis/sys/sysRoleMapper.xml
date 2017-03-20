@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.badminton.security.mapper.SysRoleMapper">
+
+    <resultMap id="BaseResultMap" type="com.badminton.entity.system.SysRole">
+		<id column="id" jdbcType="VARCHAR" property="id" />
+	</resultMap>
+	
+	
+	<select id="count" resultType="long">
+        select count(1) from sys_roles a where 1=1
+        <if test="role_name != null and role_name !='' ">
+            and a.role_name like CONCAT('%',#{role_name},'%')
+        </if>
+    </select>
+
+    <select id="queryListByPage" resultMap="BaseResultMap" parameterType="com.badminton.entity.system.SysRole">
+        select id,
+			role_name,
+			role_desc,
+			enable,
+			REPLACE(role_auth,'ROLE_','') role_auth
+		from
+			sys_roles a 
+		where 
+			a.enable = 1
+        <if test="role_name != null and role_name !='' ">
+            and a.role_name like CONCAT('%',#{role_name},'%')
+        </if>
+        <if test="orderColumn!=null and orderColumn!=''">
+            order by ${orderColumn} ${orderDir}
+        </if>
+
+    </select>
+
+
+	<select id="getResource" resultType="com.badminton.entity.system.vo.ResourceTreeVo">
+		SELECT
+			id,
+			resource_parent pId,
+			resource_name name,
+			false checked
+		FROM
+			sys_resources a
+		WHERE
+			resource_type = 'url'
+			and
+			enable = 1
+		ORDER BY
+			resource_level,
+			order_no
+	</select>
+	
+	<select id="getResourceByRoleId" resultType="java.lang.String">
+		select resource_id from sys_roles_resources where role_id = #{roleId}
+	</select>
+	
+	
+	<select id="getBtnResourceByPartentId" resultType="com.badminton.entity.system.vo.ResourceBtnVo">
+		SELECT
+			id,
+			resource_name name
+		FROM
+			sys_resources
+		WHERE
+			resource_type = 'button'
+			and
+			enable = 1
+		AND resource_parent = #{partentId}
+		ORDER BY
+			order_no
+	</select>
+	<select id="getBtnResourceByRoleId" resultType="java.lang.String">
+		SELECT resouce_btn_id FROM sys_resouce_btn where resouce_menu_id =#{resourceId} and role_id = #{roleId}
+	</select>
+	
+	<!-- 根据roleId删除现有的权限 -->
+	<delete id="delRoleResByRoleId">
+		delete from sys_roles_resources where role_id = #{roleId}
+	</delete>
+	<insert id="insertRoleResource">
+		insert into sys_roles_resources values (#{roleId},#{resourceId})
+	</insert>
+	<!-- 根据roleId  resourceId 删除按钮权限 -->
+	<delete id="delRoleResBtnByRoleId">
+		delete from sys_resouce_btn where role_id = #{roleId} and resouce_menu_id =#{resourceId}
+	</delete>
+	<insert id="insertRoleResourceBtn">
+		insert into sys_resouce_btn values (#{menuId},#{btnId},#{roleId})
+	</insert>
+</mapper>

@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.badminton.security.mapper.SysUserDao">
+    <resultMap id="sysUser" type="com.badminton.entity.system.SysUser">
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="last_login" property="lastLogin"/>
+        <result column="login_ip" property="loginIp"/>
+        <result column="ct_date" property="ctDate"/>
+        <result column="mt_date" property="mtDate"/>
+        <result column="mt_user_id" property="mtUserId"/>
+        <result column="mt_user_name" property="mtUserName"/>
+        <result column="password" property="password"/>
+        <result column="username" property="username"/>
+        <result column="account_non_expired" property="accountNonExpired"/>
+        <result column="account_non_locked" property="accountNonLocked"/>
+        <result column="credentials_non_expired" property="credentialsNonExpired"/>
+        <result column="enabled" property="enabled"/>
+        <result column="out_login_time" property="outLoginTime"/>
+
+    </resultMap>
+
+    <select id="queryBuId" resultMap="sysUser" parameterType="map">
+        select * from sys_users s where s.id = #{id} and s.enabled=1
+    </select>
+
+    <select id="loadUserName" resultMap="sysUser" parameterType="map">
+       select s.*,sr.role_id as roleId,s3.role_name as roleName from sys_users s,sys_users_roles sr,sys_roles s3 where s.id=sr.user_id and sr.role_id = s3.id
+       and s.username = #{username} and s.enabled=1
+    </select>
+
+    <select id="queryRoleByUserId" resultType="com.badminton.entity.system.SysRole" parameterType="map">
+       select s2.* from sys_users_roles s1,sys_roles s2 where s1.role_id = s2.id and s2.`enable`=1 and s1.user_id=#{userId}
+    </select>
+
+    <update id="updateUser" parameterType="com.badminton.entity.system.SysUser">
+        UPDATE sys_users
+        <trim prefix="set" suffixOverrides=",">
+            <if test="username!=null and username!=''">
+                username= #{username},
+            </if>
+            <if test="name!=null and name!=''">
+                name= #{name},
+            </if>
+            <if test="password!=null and password!=''">
+                password= #{password},
+            </if>
+            <if test="lastLogin!=null and lastLogin!=''">
+                last_login= #{lastLogin},
+            </if>
+            <if test="outLoginTime!=null and outLoginTime!=''">
+                out_login_time= #{outLoginTime},
+            </if>
+
+            <if test="loginIp!=null and loginIp!=''">
+                login_ip= #{loginIp},
+            </if>
+            <if test="enabled!=null ">
+                enabled= #{enabled},
+            </if>
+            <if test="accountNonExpired!=null ">
+                account_non_expired= #{accountNonExpired},
+            </if>
+            <if test="credentialsNonExpired!=null">
+                credentials_non_expired= #{credentialsNonExpired},
+            </if>
+            <if test="accountNonLocked!=null">
+                account_non_locked= #{accountNonLocked},
+            </if>
+        </trim>
+        WHERE (id=#{id});
+
+    </update>
+    <select id="count" resultType="long">
+        select count(*) from sys_users s1 left join sys_users_roles s2 on s1.id=s2.user_id left join sys_roles s3 on
+        s2.role_id = s3.id where 1=1
+        <if test="username!=null and username !=''">
+            and s1.username like CONCAT('%',#{username},'%')
+        </if>
+        <if test="name!=null and name !=''">
+            and s1.name like CONCAT('%',#{name},'%')
+        </if>
+        and s1.enabled=1
+    </select>
+
+    <select id="queryListByPage" resultMap="sysUser" parameterType="com.badminton.entity.system.SysUser">
+        select s1.*,s3.role_name as roleName from sys_users s1 left join sys_users_roles s2 on s1.id=s2.user_id left
+        join sys_roles s3 on s2.role_id = s3.id where 1=1
+        <if test="username!=null and username !=''">
+            and s1.username like CONCAT('%',#{username},'%')
+        </if>
+        <if test="name!=null and name !=''">
+            and s1.name like CONCAT('%',#{name},'%')
+        </if>
+        and s1.enabled=1
+        <if test="orderColumn!=null and orderColumn!=''">
+            order by ${orderColumn} ${orderDir}
+        </if>
+        <!-- limit #{pageNo},#{pageSize};-->
+
+    </select>
+
+    <delete id="delete" parameterType="map">
+        DELETE from sys_users  where id=#{id};
+    </delete>
+
+    <insert id="insert" parameterType="com.badminton.entity.system.SysUser">
+          INSERT INTO sys_users
+          (id,`username`, `name`, `password`,  `enabled`, `account_non_expired`, `credentials_non_expired`, `account_non_locked`, `create_time`)
+          VALUES (#{id},#{username}, #{name},#{password}, #{enabled},#{accountNonExpired}, #{credentialsNonExpired}, #{accountNonLocked}, #{ctDate});
+
+    </insert>
+
+    <select id="selectNext" resultType="int">
+    select max(id) from sys_users
+    </select>
+
+    <select id="queryAll" resultMap="sysUser">
+    	select * from sys_users where enabled = 1
+    </select>
+</mapper>

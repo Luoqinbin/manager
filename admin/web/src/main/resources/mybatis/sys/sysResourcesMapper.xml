@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.badminton.security.mapper.SysResourcesDao">
+    <select id="queryAllByType" resultType="com.badminton.entity.system.Authority" parameterType="map">
+        select s2.id,s2.resource_name,s2.resource_path,s1.role_auth from sys_roles s1 ,sys_resources s2,sys_roles_resources s3
+        where s1.id = s3.role_id and s3.resource_id = s2.id and s1.`enable`=1 and s2.`enable`=1
+    </select>
+
+    <select id="queryAllByUserId" resultType="com.badminton.entity.system.SysResources" parameterType="map">
+        select 	s4.id, s4.resource_type, s4.resource_name, s4.resource_desc, s4.resource_path, s4.resource_parent, s4.enable, s4.resource_icon, s4.order_no, s4.resource_level, s4.btn_style, s4.btn_index
+        from sys_users_roles s1,sys_roles s2 ,sys_roles_resources s3,sys_resources s4
+        where s1.role_id=s2.id and s2.id=s3.role_id and s3.resource_id = s4.id and s1.user_id=#{userId} and s4.`enable`=1
+        and s4.resource_type = 'url' order by s4.order_no
+    </select>
+
+    <select id="queryAllResource" resultType="com.badminton.entity.system.SysResources"
+            parameterType="com.badminton.entity.system.SysResources">
+        select * from sys_resources where 1=1
+        <if test="id != null and id !='' ">
+            and id =#{id}
+        </if>
+        <if test="resource_name != null and resource_name !='' ">
+            and resource_name like CONCAT('%',#{resource_name},'%')
+        </if>
+
+        order by order_no ASC
+    </select>
+
+    <select id="queryResourceForName" resultType="com.badminton.entity.system.SysResources"
+            parameterType="com.badminton.entity.system.SysResources">
+        select * from sys_resources where `enable`=1
+        <if test="resource_name != null and resource_name !='' ">
+            and resource_name=#{resource_name}
+        </if>
+        <![CDATA[
+          and resource_parent <> -1
+        ]]>
+    </select>
+
+    <!--Add-->
+    <insert id="addResource" parameterType="com.badminton.entity.system.SysResources"
+            useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO `sys_resources` (id,`resource_type`, `resource_name`, `resource_desc`, `resource_path`, `resource_parent`, `enable`, `resource_icon`, `order_no`, `resource_level`, `btn_style`, `btn_index`) VALUES (#{id},#{resource_type}, #{resource_name}, #{resource_desc}, #{resource_path}, #{resource_parent}, #{enable}, #{resource_icon}, #{order_no}, #{resource_level}, #{btn_style}, #{btn_index});
+    </insert>
+
+    <delete id="delResource" parameterType="java.lang.String">
+        DELETE  FROM  sys_resources
+        WHERE id=#{id}
+    </delete>
+
+    <delete id="deleteRoleResource" parameterType="java.lang.String">
+        DELETE  FROM  sys_roles_resources
+        WHERE resource_id=#{resourceId}
+    </delete>
+
+    <!--修改资源信息-->
+    <update id="updateResource" parameterType="com.badminton.entity.system.SysResources">
+       UPDATE `sys_resources` SET
+       `resource_type`=#{resource_type}, `resource_name`=#{resource_name}, `resource_desc`=#{resource_desc},
+       `resource_path`=#{resource_path}, `resource_parent`=#{resource_parent}, `enable`=#{enable}, `resource_icon`=#{resource_icon},
+       `order_no`=#{order_no}, `resource_level`=#{resource_level}, `btn_style`=#{btn_style}, `btn_index`=#{btn_index}
+       WHERE id=#{id}
+    </update>
+
+    <select id="queryAllBtn" resultType="com.badminton.entity.system.Authority">
+       select sr.id, sr.resource_name,sr.resource_path,s3.role_auth from sys_resouce_btn srb ,sys_resources sr,sys_roles s3 where srb.resouce_btn_id = sr.id
+      and srb.role_id= s3.id and s3.`enable`=1 and sr.`enable`=1
+    </select>
+
+
+
+    <select id="queryBtnByRole" resultType="com.badminton.entity.system.SysResources" parameterType="map">
+      select sr.id, sr.resource_type,sr. resource_name, sr.resource_desc, sr.resource_path, sr.resource_parent, sr.enable, sr.resource_icon, sr.order_no, sr.resource_level, sr.btn_style,sr. btn_index
+      from sys_resources sr where sr.id in (select srb.resouce_btn_id from sys_resouce_btn srb where srb.resouce_menu_id = #{menuId} and srb.role_id=${roleId})  and sr.btn_index=#{index}
+      and sr.enable = 1
+        order by sr.btn_index,sr.order_no asc
+    </select>
+
+</mapper>

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="zh_cn">
+<head>
+    <base href="../">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>欢迎回来！</title>
+    <!-- Bootstrap Core CSS -->
+    <link href="static/bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- DataTables CSS -->
+    <link href="static/bower_components/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.css" rel="stylesheet">
+    <!-- DataTables Responsive CSS -->
+    <link href="static/bower_components/datatables-responsive/css/dataTables.responsive.css" rel="stylesheet">
+    <!-- Custom Fonts -->
+    <link href="static/bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="static/zTree/css/demo.css" type="text/css">
+	<link rel="stylesheet" href="static/zTree/css/zTreeStyle/zTreeStyle.css" type="text/css">
+</head>
+<body>
+
+<div>
+	<div style="text-align:center; margin-left:auto; margin-right:auto;">
+		<img alt="" src="static/images/igxe_logo.jpg">
+		<p>
+		<button type="button" class="btn btn-danger btn-circle btn-xl"><i class="fa fa-heart"></i></button>
+		<font color="red" size="50"><b>www.ice.com</b></font>
+		</p>
+	</div>
+</div>
+</body>
+
+</html>
