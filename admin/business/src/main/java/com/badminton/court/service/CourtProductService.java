@@ -1,6 +1,7 @@
 package com.badminton.court.service;
 
 import com.badminton.entity.court.CourtProduct;
+import com.badminton.entity.court.FixedOrder;
 
 import java.util.List;
 
@@ -18,5 +19,8 @@ public interface CourtProductService {
 
     public void update(CourtProduct courtProduct);
 
-    public boolean updateProductFixeOrder(String cycel, String start, String end,String startTime,String endTime, String courtInfoId) throws Exception;
+    public boolean updateProductFixeOrder(FixedOrder fixedOrder,String cycel, String start, String end, String startTime, String endTime, String courtInfoId) throws Exception;
+
+
+    public List<CourtProduct> queryByType(CourtProduct courtProduct);
 }

@@ -184,4 +184,5 @@ public class FixedOrder extends BaseEntity{
     public void setNoStr(String noStr) {
         this.noStr = noStr;
     }
+
 }

@@ -13,7 +13,7 @@ public class CourtInfo extends BaseEntity{
     @Column(name = "serial")
      private String       serial;
     @Column(name = "Name")
-    private String   name;
+    private Integer   name;
     @Column(name = "type")
       private Double      type;
     @Column(name = "note")
@@ -37,11 +37,11 @@ public class CourtInfo extends BaseEntity{
         this.serial = serial;
     }
 
-    public String getName() {
+    public Integer getName() {
         return name;
     }
 
-    public void setName(String name) {
+    public void setName(Integer name) {
         this.name = name;
     }
 

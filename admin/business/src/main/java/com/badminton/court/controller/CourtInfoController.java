@@ -24,10 +24,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 /**
  * Created by Luoqb on 2017/3/15.
@@ -68,8 +65,14 @@ public class CourtInfoController {
     public PageResult<CourtInfo> queryList(CourtInfoQuery query, HttpServletRequest request) {
         PageUtils<CourtInfoQuery> pageUtils = new PageUtils<CourtInfoQuery>();
 
-        query = pageUtils.sort(query, request, "area", "desc", null);
+        query = pageUtils.sort(query, request, "area", "asc", null);
         List<CourtInfo> list = courtInfoService.query(query);
+        list.sort(new Comparator<CourtInfo>() {
+            @Override
+            public int compare(CourtInfo o1, CourtInfo o2) {
+                return o1.getName().compareTo(o2.getName());
+            }
+        });
         PageResult<CourtInfo> result = new PageResult<CourtInfo>(new PageInfo<CourtInfo>(list));
         return result;
     }
@@ -152,8 +155,8 @@ public class CourtInfoController {
         if(areaIndex==-1){
             query.setArea(query.getArea()+"F");
         }
-        query.setSerial(query.getName());
-        query.setName(query.getName()+"号场");
+        query.setSerial(query.getName()+"");
+        query.setName(query.getName());
         if (StringUtils.isNotEmpty(query.getId().toString())) {
             //更新
             return this.update(query);

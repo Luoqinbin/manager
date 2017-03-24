@@ -14,4 +14,7 @@ public interface BookCustomerService {
     public BookCustomer queryOne(BookCustomer customer);
 
     public void insert(BookCustomer customer);
+
+
+    public void deleteById(BookCustomer bookCustomer);
 }

@@ -36,4 +36,9 @@ public class BookCustomerServiceImpl implements BookCustomerService{
     public void insert(BookCustomer customer) {
         mapper.insert(customer);
     }
+
+    @Override
+    public void deleteById(BookCustomer bookCustomer) {
+        mapper.delete(bookCustomer);
+    }
 }

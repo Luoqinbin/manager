@@ -1,13 +1,18 @@
 package com.badminton.court.service.impl;
 
 import com.badminton.court.mapper.CourtProductMapper;
+import com.badminton.court.service.BookCustomerService;
 import com.badminton.court.service.CourtProductService;
+import com.badminton.court.service.FixedOrderService;
+import com.badminton.entity.court.BookCustomer;
 import com.badminton.entity.court.CourtProduct;
+import com.badminton.entity.court.FixedOrder;
 import com.badminton.interceptors.mySqlHelper.conditionHelper.query.Condition;
 import com.badminton.interceptors.mySqlHelper.conditionHelper.query.ConditionConstant;
 import com.badminton.interceptors.mySqlHelper.conditionHelper.query.OrderCondition;
 import com.badminton.interceptors.mySqlHelper.pagehelper.util.StringUtil;
 import com.badminton.utils.DateUtil;
+import com.badminton.utils.TimestampPkGenerator;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,6 +30,11 @@ public class CourtProductServiceImpl implements CourtProductService {
     private Logger logger = Logger.getLogger(getClass());
     @Autowired
     private CourtProductMapper courtProductMapper;
+    @Autowired
+    private BookCustomerService bookCustomerService;
+    @Autowired
+    private FixedOrderService fixedOrderService;
+
     @Override
     public List<CourtProduct> query(CourtProduct courtProduct) {
         if(courtProduct.getOrderDir().equals("asc")) {
@@ -86,7 +96,7 @@ public class CourtProductServiceImpl implements CourtProductService {
     }
 
     @Override
-    public boolean updateProductFixeOrder(String cycel, String start, String end,String startTime,String endTime, String courtInfoId) throws Exception {
+    public boolean updateProductFixeOrder(FixedOrder fixedOrder, String cycel, String start, String end, String startTime, String endTime, String courtInfoId) throws Exception {
         //周期
         String[] str= cycel.split(",");
         List<Date> listDate = getBetweenDates(DateUtil.string2Date(start,"yyyy-MM-d"),DateUtil.string2Date(end,"yyyy-MM-dd"));
@@ -108,9 +118,28 @@ public class CourtProductServiceImpl implements CourtProductService {
                    String ed =  DateUtil.date2String(date,"yyyy-MM-dd")+" "+endTime+":00:00";
                     List<CourtProduct> list = this.courtProductMapper.queryByTime(sd,ed,courtInfoId);
                     for(CourtProduct c:list){
-                        c.setStart(2);
-                        c.setType(1);
-                        this.courtProductMapper.updateByPrimaryKeySelective(c);
+                        if (c.getState()==1) {
+                            CourtProduct c1 = new CourtProduct();
+                            c1.setId(c.getId());
+                            c1.setState(2);
+                            c1.setType(1);
+                            this.courtProductMapper.updateByPrimaryKeySelective(c1);
+                            //添加到订场表
+                            BookCustomer customer = new BookCustomer();
+                            customer.setPrice(c.getPrice());
+                            customer.setProductId(c.getId().toString());
+                            customer.setPayType(Double.parseDouble(fixedOrder.getPayWay()));
+                            customer.setMobile(fixedOrder.getPhone());
+                            customer.setSource(2D);
+                            customer.setState(2);
+                            customer.setRefundState(0);
+                            customer.setPerson(fixedOrder.getName());
+                            customer.setCreatedDt(new Date());
+                            long id = new TimestampPkGenerator().next(getClass());
+                            customer.setId(id);
+                            customer.setFixedOrderId(fixedOrder.getId() + "");
+                            bookCustomerService.insert(customer);
+                        }
                     }
                 }
             }
@@ -118,6 +147,11 @@ public class CourtProductServiceImpl implements CourtProductService {
 
        /* */
         return true;
+    }
+
+    @Override
+    public List<CourtProduct> queryByType(CourtProduct courtProduct) {
+        return this.courtProductMapper.select(courtProduct);
     }
 
     private List<Date> getBetweenDates(Date start, Date end) {

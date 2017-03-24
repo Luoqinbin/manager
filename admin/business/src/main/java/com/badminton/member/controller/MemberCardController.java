@@ -59,7 +59,7 @@ public class MemberCardController {
     public PageResult<MemberCard> queryList(MemberCardQuery query, HttpServletRequest request) {
         PageUtils<MemberCardQuery> pageUtils = new PageUtils<MemberCardQuery>();
 
-        query = pageUtils.sort(query, request, "name", "desc", null);
+        query = pageUtils.sort(query, request, "title_account", "desc", null);
         List<MemberCard> list = memberCardService.query(query);
         PageResult<MemberCard> result = new PageResult<MemberCard>(new PageInfo<MemberCard>(list));
         return result;
@@ -131,7 +131,12 @@ public class MemberCardController {
                 max = Long.parseLong( memberCard.getRank()+"0001");
                 memberCard.setMaxNumber(max);
             }else{
-                memberCard.setMaxNumber(max+1);
+                Long num = max+1;
+                String lastNum = num.toString().substring(num.toString().length()-1,num.toString().length());
+                if(lastNum.equals("4")){
+                    num++;
+                }
+                memberCard.setMaxNumber(num);
             }
             baseResult.setData(memberCard);
         } else {

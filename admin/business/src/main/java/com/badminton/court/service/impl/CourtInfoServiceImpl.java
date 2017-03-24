@@ -23,7 +23,8 @@ public class CourtInfoServiceImpl implements CourtInfoService {
     public List<CourtInfo> query(CourtInfo courtInfo) {
         if (courtInfo != null){
             if (courtInfo.getOrderDir().equals("asc")) {
-                courtInfo.setCondition(Condition.build().addOrder(courtInfo.getOrderColumn(), OrderCondition.Direction.ASC));
+                Condition condition = Condition.build() ;
+                courtInfo.setCondition(condition.addOrder(courtInfo.getOrderColumn(), OrderCondition.Direction.ASC));
             } else if (courtInfo.getOrderDir().equals("desc")) {
                 courtInfo.setCondition(Condition.build().addOrder(courtInfo.getOrderColumn(), OrderCondition.Direction.DESC));
             }

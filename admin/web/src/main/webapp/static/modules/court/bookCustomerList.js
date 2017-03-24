@@ -35,7 +35,8 @@ define([
                 {"mData": "person"},
                 {"mData": "price"},
                 {"mData": "phone"},
-                {"mData": "id"}
+                {"mData": "id"},
+                {"mData": "createdDt"}
             ];
             var aoColumnDefs = [{
                 "aTargets": [1],
@@ -44,6 +45,11 @@ define([
                         return  moment(a).format("YYYY-MM-DD HH:mm:ss");
                     else
                         return "";
+                }
+            },{
+                "aTargets": [3],
+                "mRender": function (a, b, c, d) {
+                    return a+"号场";
                 }
             },{
                 "aTargets": [4],
@@ -55,6 +61,14 @@ define([
                 }
             },{
                 "aTargets": [5],
+                "mRender": function (a, b, c, d) {
+                    if (util.assertNotNullStr(a))
+                        return  moment(a).format("YYYY-MM-DD HH:mm:ss");
+                    else
+                        return "";
+                }
+            },{
+                "aTargets": [10],
                 "mRender": function (a, b, c, d) {
                     if (util.assertNotNullStr(a))
                         return  moment(a).format("YYYY-MM-DD HH:mm:ss");

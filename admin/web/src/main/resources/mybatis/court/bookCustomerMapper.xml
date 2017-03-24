@@ -29,7 +29,7 @@
         </if>
         <if test="createdDtQuery!=null and createdDtQuery != ''">
             <![CDATA[
-            and bc.created_dt >= '${createdDtQuery}'  and  bc.created_dt<= CONCAT('${createdDtQuery}','23:59:59')
+            and v.startTime >= '${createdDtQuery}'  and  v.endTime<= CONCAT('${createdDtQuery}','23:59:59')
             ]]>
         </if>
         <if test="area!=null and area != ''">
@@ -38,5 +38,6 @@
         <if test="nameInfo!=null and nameInfo != ''">
             and v.name = #{nameInfo}
         </if>
+        ORDER BY name ,startTime asc
     </select>
 </mapper>

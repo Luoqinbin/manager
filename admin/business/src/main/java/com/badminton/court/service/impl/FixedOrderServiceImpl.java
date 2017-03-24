@@ -45,4 +45,14 @@ public class FixedOrderServiceImpl implements FixedOrderService {
     public FixedOrder queryOne(FixedOrder fixedOrder) {
         return fixedOrderMapper.selectOne(fixedOrder);
     }
+
+    @Override
+    public FixedOrder queryById(Object id) {
+        return fixedOrderMapper.selectByPrimaryKey(id);
+    }
+
+    @Override
+    public void update(FixedOrder fixedOrder) {
+        fixedOrderMapper.updateByPrimaryKeySelective(fixedOrder);
+    }
 }

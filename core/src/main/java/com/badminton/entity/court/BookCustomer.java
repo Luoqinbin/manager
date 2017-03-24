@@ -40,6 +40,9 @@ public class BookCustomer extends BaseEntity{
     private String mobile;
     @Column(name = "person")
     private String person;
+    @Column(name = "fixed_order_id")
+    private String fixedOrderId;
+
     @Transient
     private String nameInfo;
     @Transient
@@ -139,6 +142,14 @@ public class BookCustomer extends BaseEntity{
 
     public Date getUpdatedDt() {
         return updatedDt;
+    }
+
+    public String getFixedOrderId() {
+        return fixedOrderId;
+    }
+
+    public void setFixedOrderId(String fixedOrderId) {
+        this.fixedOrderId = fixedOrderId;
     }
 
     public void setUpdatedDt(Date updatedDt) {

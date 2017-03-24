@@ -19,6 +19,8 @@ import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -87,11 +89,17 @@ public class MemberInfoServiceImpl implements IMemberInfoService {
                         memberInfo.setPhone(detail.get(2));
                         memberInfo.setName(detail.get(3));
                         memberInfo.setAccount(Double.parseDouble(detail.get(4)));
-                        memberInfo.setCratedDt(new SimpleDateFormat("yyyy.MM.dd").parse(detail.get(5)));
+                        Date blsj = new SimpleDateFormat("yyyy.MM.dd").parse(detail.get(5));
+                        memberInfo.setCratedDt(blsj);
                         memberInfo.setComments(detail.get(6));
                         memberInfo.setStatus(1);
                         memberInfo.setEmptyDiscount(memberCard.getEmptyDiscount());
                         memberInfo.setBusyDiscount(memberCard.getBusyDiscount());
+                        //设置到期时间
+                        Calendar calendar = Calendar.getInstance();
+                        calendar.setTime(blsj);
+                        calendar.add(Calendar.MONTH,Integer.parseInt( memberCard.getLast()));
+                        memberInfo.setExpireDt(calendar.getTime());
                         memberInfoMapper.insert(memberInfo);
                     }
                 }else{

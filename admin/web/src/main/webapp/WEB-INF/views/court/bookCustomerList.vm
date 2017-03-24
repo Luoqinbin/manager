@@ -106,6 +106,7 @@
                 <th>价格</th>
                 <th>联系电话</th>
                 <th>订单编号</th>
+                <th>创建时间</th>
             </tr>
             </thead>
             <tbody></tbody>

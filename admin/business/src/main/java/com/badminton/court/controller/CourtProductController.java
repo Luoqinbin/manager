@@ -60,7 +60,7 @@ public class CourtProductController {
         for(CourtProduct c:list){
             CourtInfo courtInfo = courtInfoService.queryId(c.getCourtId()+"");
             c.setArea(courtInfo.getArea());
-            c.setAddr(courtInfo.getName());
+            c.setAddr(courtInfo.getName()+"");
         }
         PageResult<CourtProduct> result = new PageResult<CourtProduct>(new PageInfo<CourtProduct>(list));
         return result;

@@ -1,8 +1,10 @@
 package com.badminton.court.controller;
 
+import com.badminton.court.service.BookCustomerService;
 import com.badminton.court.service.CourtInfoService;
 import com.badminton.court.service.CourtProductService;
 import com.badminton.court.service.FixedOrderService;
+import com.badminton.entity.court.BookCustomer;
 import com.badminton.entity.court.CourtInfo;
 import com.badminton.entity.court.CourtProduct;
 import com.badminton.entity.court.FixedOrder;
@@ -46,6 +48,8 @@ public class FixedOrderController {
     private CourtInfoService courtInfoService;
     @Autowired
     private CourtProductService courtProductService;
+    @Autowired
+    private BookCustomerService bookCustomerService;
 
     @RequestMapping(value = "init")
     public String initList(HttpServletRequest request) {
@@ -79,7 +83,7 @@ public class FixedOrderController {
             if(StringUtils.isNotEmpty( fixedOrder.getCourtInfoId())) {
                CourtInfo courtInfo = this.courtInfoService.queryId(fixedOrder.getCourtInfoId());
                fixedOrder.setAreaStr(courtInfo.getArea());
-               fixedOrder.setNoStr(courtInfo.getName());
+               fixedOrder.setNoStr(courtInfo.getName()+"");
             }
         }
         PageResult<FixedOrder> result = new PageResult<FixedOrder>(new PageInfo<FixedOrder>(list));
@@ -92,7 +96,24 @@ public class FixedOrderController {
         BaseResult baseResult = new BaseResult();
         if (StringUtils.isNotEmpty(id+"")) {
             try {
-                this.fixedOrderService.delete(id);
+               FixedOrder fixedOrder =  fixedOrderService.queryById(id);
+               if(fixedOrder!=null) {
+                   this.fixedOrderService.delete(id);
+                   //删除订单表
+                   BookCustomer bookCustomer = new BookCustomer();
+                   bookCustomer.setFixedOrderId(fixedOrder.getId()+"");
+                   bookCustomerService.deleteById(bookCustomer);
+                   //更新订场情况
+                   CourtProduct courtProduct = new CourtProduct();
+                   courtProduct.setType(1);
+                   courtProduct.setCourtId(Long.parseLong( fixedOrder.getCourtInfoId()));
+                   List<CourtProduct> list = courtProductService.queryByType(courtProduct);
+                   for(CourtProduct p:list){
+                       p.setType(0);
+                       p.setState(1);
+                       courtProductService.update(p);
+                   }
+               }
                 baseResult.setCode(BaseResult.CODE_OK);
                 baseResult.setMessage("删除数据成功");
             } catch (Exception e) {
@@ -137,7 +158,7 @@ public class FixedOrderController {
             FixedOrder fixedOrder = fixedOrderService.queryOne(f);
             if(fixedOrder==null) {
                 this.fixedOrderService.insert(query);
-                this.courtProductService.updateProductFixeOrder(query.getCycle(), query.getStartDateStr(), query.getEndDateStr(), query.getStartTime(), query.getEndTime(), query.getCourtInfoId());
+                this.courtProductService.updateProductFixeOrder(query,query.getCycle(), query.getStartDateStr(), query.getEndDateStr(), query.getStartTime(), query.getEndTime(), query.getCourtInfoId());
 
                 baseResult.setCode(BaseResult.CODE_OK);
                 baseResult.setMessage("添加数据成功");

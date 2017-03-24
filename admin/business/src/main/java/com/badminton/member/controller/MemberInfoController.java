@@ -201,12 +201,17 @@ public class MemberInfoController {
             memberOrder.setState(1);
             memberOrder.setOperateType(1);
             try {
-                Long max = this.memberInfoService.maxNumber(query.getId()+"");
+                Long max = this.memberInfoService.maxNumber(query.getType()+"");
                 if(max == null){
                     max = Long.parseLong( memberCard.getRank()+"0001");
                     query.setNumber(max+"");
                 }else{
-                    query.setNumber((max+1)+"");
+                    Long num = max+1;
+                    String lastNum = num.toString().substring(num.toString().length()-1,num.toString().length());
+                    if(lastNum.equals("4")){
+                        num++;
+                    }
+                    query.setNumber(num+"");
                 }
                 this.memberInfoService.insert(query);
                 this.memberOrderService.insert(memberOrder);

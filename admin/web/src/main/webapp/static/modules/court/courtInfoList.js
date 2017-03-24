@@ -67,6 +67,11 @@ define([
 
             ];
             var aoColumnDefs = [{
+                "aTargets": [1],
+                "mRender": function (a, b, c, d) {
+                    return  a+"号场";
+                }
+            },{
                 "aTargets": [2],
                 "mRender": function (a, b, c, d) {
                     return  "￥"+a;
@@ -205,7 +210,7 @@ define([
                     var dateArray = new Array();
                     var sum = 0;
                     var ids = "";
-                    $("#areaSpan").text(data.area+"-"+data.name);
+                    $("#areaSpan").text(data.area+"-"+data.name+"号场");
                     for(var i=0;i<chk_value.length;i++){
                         var str = chk_value[i].split(",");
                         ids+=str[0]+",";
@@ -294,7 +299,7 @@ define([
                         content: $("#addWin"),
                         btn: ['确定', '关闭'],
                         success:function(){
-                            d.name = d.name.replace("号场","");
+                            //d.name = d.name.replace("号场","");
                             d.area = d.area.replace("F","");
                             datastore.publishFormData($("#addWin"), d);
                         },

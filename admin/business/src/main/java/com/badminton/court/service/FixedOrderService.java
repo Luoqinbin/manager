@@ -15,4 +15,8 @@ public interface FixedOrderService {
     public void insert(FixedOrder fixedOrder);
 
     public FixedOrder queryOne(FixedOrder fixedOrder);
+
+    public FixedOrder queryById(Object id);
+
+    public void update(FixedOrder fixedOrder);
 }
