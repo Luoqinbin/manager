@@ -1,5 +1,7 @@
 package com.badminton.member.controller;
 
+import com.badminton.court.service.FlowRecordService;
+import com.badminton.entity.court.FlowRecord;
 import com.badminton.entity.member.MemberCard;
 import com.badminton.entity.member.MemberInfo;
 import com.badminton.entity.member.MemberOrder;
@@ -42,6 +44,8 @@ public class MemberOrderController {
     private IMemberCardService memberCardService;
     @Autowired
     private IMemberOrderService memberOrderService;
+    @Autowired
+    private FlowRecordService flowRecordService;
 
     @RequestMapping(value = "init")
     public String init(HttpServletRequest request) {
@@ -100,6 +104,15 @@ public class MemberOrderController {
             String comment = request.getParameter("comment");
             memberOrder.setComments(comment);
             this.memberOrderService.insert(memberOrder);
+            //添加记录
+            //添加记录
+            FlowRecord flowRecord = new FlowRecord();
+            flowRecord.setId(new TimestampPkGenerator().next(getClass()));
+            flowRecord.setCreatedDt(new Date());
+            flowRecord.setOperateType(11);
+            flowRecord.setAmount(nowAccount);
+            flowRecord.setDirection(1);
+            this.flowRecordService.insert(flowRecord);
         } catch (Exception e) {
             e.printStackTrace();
         }

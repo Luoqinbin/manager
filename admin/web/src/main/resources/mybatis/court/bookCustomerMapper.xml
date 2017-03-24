@@ -11,7 +11,8 @@
         bc.price AS price,
         bc.created_dt AS createdDt,
         bc.pay_type as payType ,
-        bc.person as person
+        bc.person as person,
+        bc.member_num as memberNum
         from book_customer bc ,( SELECT
         c.id AS cid,
         cp.id as pid,

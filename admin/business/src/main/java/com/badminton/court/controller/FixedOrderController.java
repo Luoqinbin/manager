@@ -1,18 +1,14 @@
 package com.badminton.court.controller;
 
-import com.badminton.court.service.BookCustomerService;
-import com.badminton.court.service.CourtInfoService;
-import com.badminton.court.service.CourtProductService;
-import com.badminton.court.service.FixedOrderService;
-import com.badminton.entity.court.BookCustomer;
-import com.badminton.entity.court.CourtInfo;
-import com.badminton.entity.court.CourtProduct;
-import com.badminton.entity.court.FixedOrder;
+import com.badminton.court.service.*;
+import com.badminton.entity.court.*;
 import com.badminton.entity.court.query.FixedOrderQuery;
+import com.badminton.entity.member.MemberInfo;
 import com.badminton.entity.system.SysUser;
 import com.badminton.entity.test.TestCrud;
 import com.badminton.entity.test.query.TestCrudQuery;
 import com.badminton.interceptors.mySqlHelper.pagehelper.PageInfo;
+import com.badminton.member.service.IMemberInfoService;
 import com.badminton.result.BaseResult;
 import com.badminton.result.PageResult;
 import com.badminton.security.service.SysResourcesService;
@@ -50,6 +46,10 @@ public class FixedOrderController {
     private CourtProductService courtProductService;
     @Autowired
     private BookCustomerService bookCustomerService;
+    @Autowired
+    private IMemberInfoService memberInfoService;
+    @Autowired
+    private FlowRecordService flowRecordService;
 
     @RequestMapping(value = "init")
     public String initList(HttpServletRequest request) {
@@ -135,42 +135,12 @@ public class FixedOrderController {
         BaseResult baseResult = new BaseResult();
         //添加
         SysUser userDetails = (SysUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        query.setId(new TimestampPkGenerator().next(getClass()));
+
         try {
-            //构造时间
-           /* Date start = DateUtil.string2Date(query.getStartDateStr(),"yyyy-MM-dd");
-            Date end = DateUtil.string2Date(query.getEndDateStr(),"yyyy-MM-dd");
-            String startStr = DateUtil.date2String(start,"yyyy-MM-dd");
-            String endStr = DateUtil.date2String(end,"yyyy-MM-dd");*/
-            //查询场地
-/*            String startStr = query.getStartDateStr()+ " "+query.getStartTime()+":00:00";
-            String  endStr = query.getEndDateStr()+" "+query.getEndTime()+":00:00";*/
-            query.setStartDate(DateUtil.string2Date(query.getStartDateStr()));
-            query.setEndDate(DateUtil.string2Date(query.getEndDateStr()));
-
-            FixedOrder f = new FixedOrder();
-            f.setStartDate(DateUtil.string2Date(query.getStartDateStr()));
-            f.setEndDate(DateUtil.string2Date(query.getEndDateStr()));
-            f.setStartTime(query.getStartTime());
-            f.setEndTime(query.getEndTime());
-            f.setCycle(query.getCycle());
-            f.setCourtInfoId(query.getCourtInfoId());
-            FixedOrder fixedOrder = fixedOrderService.queryOne(f);
-            if(fixedOrder==null) {
-                this.fixedOrderService.insert(query);
-                this.courtProductService.updateProductFixeOrder(query,query.getCycle(), query.getStartDateStr(), query.getEndDateStr(), query.getStartTime(), query.getEndTime(), query.getCourtInfoId());
-
-                baseResult.setCode(BaseResult.CODE_OK);
-                baseResult.setMessage("添加数据成功");
-            }else{
-                baseResult.setCode(BaseResult.CODE_FAIL);
-                baseResult.setMessage("已经添加了相同的固定场");
-            }
+            return this.fixedOrderService.addFixedOrder(query);
         } catch (Exception e) {
             e.printStackTrace();
-            baseResult.setCode(BaseResult.CODE_FAIL);
-            baseResult.setMessage("添加数据失败");
         }
-        return baseResult;
+        return new BaseResult("添加固定场失败",BaseResult.CODE_FAIL);
     }
 }

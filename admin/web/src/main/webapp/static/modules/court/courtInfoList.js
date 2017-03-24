@@ -218,7 +218,9 @@ define([
                         dateArray.push(str[2]);
                         sum= sum + parseInt( str[3]);
                     }
-                    $("#dateSpan").text(dateArray[0]+" - "+dateArray[dateArray.length-1]);
+                    /*$("#dateSpan").text(dateArray[0]+" - "+dateArray[dateArray.length-1]);*/
+                    $("#startTimeInput").val(dateArray[0]);
+                    $("#endTimeInput").val(dateArray[dateArray.length-1]);
                     $("#price").val(sum);
                     $("#areaId").val(ids.substring(0,ids.length-1));
                     $("#payType").val("");
@@ -235,6 +237,8 @@ define([
                     data['phone']=phone;
                     data['date']=$("#date").val();
                     data['person']=$("#person").val();
+                    data['startTime']=$("#startTimeInput").val();
+                    data['endTime']=$("#endTimeInput").val();
                     if (payType==""){
                         layer.msg("请选择支付方式！");
                         return;

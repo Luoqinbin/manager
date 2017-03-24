@@ -15,6 +15,7 @@ public class BookCustomerInfoQuery {
     private String orderNo;//订单号
     private String phone;//预定人手机
     private String payType;//支付类型
+    private String memberNum;
 
     public Long getId() {
         return id;
@@ -102,5 +103,13 @@ public class BookCustomerInfoQuery {
 
     public void setPayType(String payType) {
         this.payType = payType;
+    }
+
+    public String getMemberNum() {
+        return memberNum;
+    }
+
+    public void setMemberNum(String memberNum) {
+        this.memberNum = memberNum;
     }
 }

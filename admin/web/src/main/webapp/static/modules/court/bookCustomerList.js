@@ -36,7 +36,8 @@ define([
                 {"mData": "price"},
                 {"mData": "phone"},
                 {"mData": "id"},
-                {"mData": "createdDt"}
+                {"mData": "createdDt"},
+                {"mData": "memberNum"}
             ];
             var aoColumnDefs = [{
                 "aTargets": [1],
@@ -71,7 +72,7 @@ define([
                 "aTargets": [10],
                 "mRender": function (a, b, c, d) {
                     if (util.assertNotNullStr(a))
-                        return  moment(a).format("YYYY-MM-DD HH:mm:ss");
+                        return  moment(a).format("YYYY-MM-DD");
                     else
                         return "";
                 }

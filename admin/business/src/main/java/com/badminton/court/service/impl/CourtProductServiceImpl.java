@@ -91,13 +91,15 @@ public class CourtProductServiceImpl implements CourtProductService {
     }
 
     @Override
-    public void update(CourtProduct courtProduct) {
+    public void update(CourtProduct courtProduct) throws Exception {
         this.courtProductMapper.updateByPrimaryKeySelective(courtProduct);
     }
 
     @Override
-    public boolean updateProductFixeOrder(FixedOrder fixedOrder, String cycel, String start, String end, String startTime, String endTime, String courtInfoId) throws Exception {
+    public String updateProductFixeOrder(FixedOrder fixedOrder, String cycel, String start, String end, String startTime, String endTime, String courtInfoId) throws Exception {
         //周期
+        int index = 0;
+        int listSize = 0;
         String[] str= cycel.split(",");
         List<Date> listDate = getBetweenDates(DateUtil.string2Date(start,"yyyy-MM-d"),DateUtil.string2Date(end,"yyyy-MM-dd"));
         listDate.add(0,DateUtil.string2Date(start,"yyyy-MM-d"));
@@ -114,9 +116,10 @@ public class CourtProductServiceImpl implements CourtProductService {
                     System.out.println("========>"+DateUtil.date2String(date,"yyyy-MM-dd"));
 
                     //startTime
-                   String sd = DateUtil.date2String(date,"yyyy-MM-dd")+" "+startTime+":00:00";
-                   String ed =  DateUtil.date2String(date,"yyyy-MM-dd")+" "+endTime+":00:00";
+                    String sd = DateUtil.date2String(date,"yyyy-MM-dd")+" "+startTime+":00:00";
+                    String ed =  DateUtil.date2String(date,"yyyy-MM-dd")+" "+endTime+":00:00";
                     List<CourtProduct> list = this.courtProductMapper.queryByTime(sd,ed,courtInfoId);
+                    listSize += list.size();
                     for(CourtProduct c:list){
                         if (c.getState()==1) {
                             CourtProduct c1 = new CourtProduct();
@@ -135,18 +138,22 @@ public class CourtProductServiceImpl implements CourtProductService {
                             customer.setRefundState(0);
                             customer.setPerson(fixedOrder.getName());
                             customer.setCreatedDt(new Date());
+                            customer.setMemberNum("固定场预定");
                             long id = new TimestampPkGenerator().next(getClass());
                             customer.setId(id);
                             customer.setFixedOrderId(fixedOrder.getId() + "");
                             bookCustomerService.insert(customer);
+                        }else{
+                            index++;
                         }
                     }
                 }
             }
         }
+       return "";
 
        /* */
-        return true;
+
     }
 
     @Override

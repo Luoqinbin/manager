@@ -1,6 +1,7 @@
 package com.badminton.court.service;
 
 import com.badminton.entity.court.FixedOrder;
+import com.badminton.result.BaseResult;
 
 import java.util.List;
 
@@ -19,4 +20,6 @@ public interface FixedOrderService {
     public FixedOrder queryById(Object id);
 
     public void update(FixedOrder fixedOrder);
+
+    public BaseResult addFixedOrder(FixedOrder fixedOrder) throws Exception;
 }

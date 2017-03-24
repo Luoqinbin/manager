@@ -172,18 +172,19 @@ define([
                 content: $("#addWin"),
                 btn: ['添加', '关闭'],
                 success: function (layero, index) {
-                    $("#startTime").empty();
-                    var option = "";
+
+                    var option = " <option value=''></option>";
                     for(var i=9;i<23;i++){
                         option+="<option value='"+i+"'>"+i+":00</option>";
                     }
+                    $("#startTime").empty();
                     $("#startTime").append(option);
-                    option = "";
+                    var ooo = " <option value=''></option>";
                     for(var i=9;i<23;i++){
-                        option+="<option value='"+i+"'>"+i+":00</option>";
+                        ooo+="<option value='"+i+"'>"+i+":00</option>";
                     }
                     $("#endTime").empty();
-                    $("#endTime").append(option);
+                    $("#endTime").append(ooo);
                 },
                 yes: function (layero, index) {
                     if ($("#form").valid()) {

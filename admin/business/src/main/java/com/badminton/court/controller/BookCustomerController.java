@@ -3,16 +3,23 @@ package com.badminton.court.controller;
 import com.badminton.court.service.BookCustomerService;
 import com.badminton.court.service.CourtInfoService;
 import com.badminton.court.service.CourtProductService;
+import com.badminton.court.service.FlowRecordService;
 import com.badminton.entity.court.BookCustomer;
 import com.badminton.entity.court.CourtInfo;
 import com.badminton.entity.court.CourtProduct;
+import com.badminton.entity.court.FlowRecord;
 import com.badminton.entity.court.query.BookCustomerInfoQuery;
 import com.badminton.entity.court.query.BookCustomerQuery;
+import com.badminton.entity.member.MemberCard;
+import com.badminton.entity.member.MemberInfo;
 import com.badminton.entity.system.SysUser;
 import com.badminton.entity.test.TestCrud;
 import com.badminton.entity.test.query.TestCrudQuery;
 import com.badminton.interceptors.mySqlHelper.pagehelper.PageInfo;
 import com.badminton.interceptors.mySqlHelper.pagehelper.util.StringUtil;
+import com.badminton.member.service.IMemberCardService;
+import com.badminton.member.service.IMemberInfoService;
+import com.badminton.member.service.impl.MemberCardServiceImpl;
 import com.badminton.result.BaseResult;
 import com.badminton.result.PageResult;
 import com.badminton.security.service.SysResourcesService;
@@ -28,6 +35,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
+import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -48,6 +56,10 @@ public class BookCustomerController {
     private CourtInfoService courtInfoService;
     @Autowired
     private CourtProductService courtProductService;
+    @Autowired
+    private IMemberInfoService memberInfoService;
+    @Autowired
+    private FlowRecordService flowRecordService;
 
     @RequestMapping(value = "init")
     public String initList(HttpServletRequest request) {
@@ -115,49 +127,14 @@ public class BookCustomerController {
     //订场
     @RequestMapping(value = "addOrder", method = RequestMethod.POST)
     @ResponseBody
-    public BaseResult addOrder(String areaId,String price,String payType,String phone,String date,String person){
-        BaseResult baseResult = new BaseResult();
-        //查询场地是否被预定
-        String[] strIds = areaId.split(",");
-        int num = 0;
-        for(int i=0;i<strIds.length;i++){
-            BookCustomer c = new BookCustomer();
-            c.setProductId(strIds[i]);
-            BookCustomer customer = this.bookCustomerService.queryOne(c);
-            if(customer!=null){
-                num++;
-            }
+    public BaseResult addOrder(String areaId,String price,String payType,String phone,String date,String person,String startTime,String endTime) {
+        try {
+
+            return this.bookCustomerService.insertOrder(areaId,price,payType,phone,date,person,startTime,endTime);
+        }catch (Exception e){
+            e.printStackTrace();
         }
-        if(num>0){
-            baseResult.setMessage("预订失败，该场地已经被人预定");
-            baseResult.setCode(BaseResult.CODE_FAIL);
-            return baseResult;
-        }else{
-            for(int i=0;i<strIds.length;i++){
-                BookCustomer customer = new BookCustomer();
-                customer.setProductId(strIds[i]);
-                try {
-                    customer.setCreatedDt(DateUtil.string2Date(date));
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
-                CourtProduct courtProduct = this.courtProductService.queryById(Long.parseLong(strIds[i]));
-                customer.setPrice(courtProduct.getPrice());
-                customer.setPayType(Double.parseDouble( payType));
-                customer.setMobile(phone);
-                customer.setSource(2D);
-                customer.setState(2);
-                customer.setRefundState(0);
-                customer.setPerson(person);
-                customer.setId(new TimestampPkGenerator().next(getClass()));
-                courtProduct.setState(3);
-                this.courtProductService.update(courtProduct);
-                this.bookCustomerService.insert(customer);
-            }
-            baseResult.setMessage("预订成功");
-            baseResult.setCode(BaseResult.CODE_OK);
-            return baseResult;
-        }
+        return new BaseResult("订场失败",BaseResult.CODE_FAIL);
 
 
     }
