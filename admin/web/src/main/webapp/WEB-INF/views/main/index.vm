@@ -6,7 +6,7 @@
 <!--<![endif]-->
 <!-- BEGIN HEAD -->
 <head>
-    <base href="../">
+    <base href="${basePath}">
     <meta charset="utf-8"/>
     <title>后台管理系统</title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
