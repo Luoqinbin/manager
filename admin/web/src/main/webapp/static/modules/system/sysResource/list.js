@@ -65,7 +65,8 @@ define([
                 }
                 $("#resource_parent").val(resource_parent);
                 layer.open({
-                    area: ['600px', '750px'],
+                    area: '800px',
+                    shade: [0.8, '#393D49'],
                     title: "新增资源",
                     type: 1,
                     content: $("#addWin"),
@@ -197,7 +198,8 @@ define([
                 if (data.code == 200) {
                     var d = data.data;
                     layer.open({
-                        area: ['600px', '750px'],
+                        area: '800px',
+                        shade: [0.8, '#393D49'],
                         title: "修改",
                         type: 1,
                         content: $("#addWin"),

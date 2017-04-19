@@ -39,24 +39,28 @@ public class CourtInfoController {
 
     @RequestMapping(value = "init")
     public String initList(HttpServletRequest request) {
-        String menuId = request.getParameter("menuId");
-        request.setAttribute("menuId", menuId);
-        SysUser userDetails = (SysUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        String addBtn = sysResourcesService.queryBtnByRole(userDetails.getRoleId(), menuId, 1);
-        request.setAttribute("addBtn", addBtn);
+        try {
+            String menuId = request.getParameter("menuId");
+            request.setAttribute("menuId", menuId);
+            SysUser userDetails = (SysUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            String addBtn = sysResourcesService.queryBtnByRole(userDetails.getRoleId(), menuId, 1);
+            request.setAttribute("addBtn", addBtn);
 
-        String listBtn = sysResourcesService.queryBtnByRole(userDetails.getRoleId(), menuId, 2);
-        request.setAttribute("listBtn", listBtn);
-        List<String> areaList = this.courtInfoService.queryArea();
-        request.setAttribute("areaList",areaList);
-        //得到5天的日期
-        List<String> dateList = new ArrayList<>();
-        dateList.add(DateUtil.date2String( new Date()));
-        dateList.add(DateUtil.date2String( DateUtil.getDateAfter(new Date(),1)));
-        dateList.add(DateUtil.date2String( DateUtil.getDateAfter(new Date(),2)));
-        dateList.add(DateUtil.date2String( DateUtil.getDateAfter(new Date(),3)));
-        dateList.add(DateUtil.date2String( DateUtil.getDateAfter(new Date(),4)));
-        request.setAttribute("dateList",dateList);
+            String listBtn = sysResourcesService.queryBtnByRole(userDetails.getRoleId(), menuId, 2);
+            request.setAttribute("listBtn", listBtn);
+            List<String> areaList = this.courtInfoService.queryArea();
+            request.setAttribute("areaList", areaList);
+            //得到5天的日期
+            List<String> dateList = new ArrayList<>();
+            dateList.add(DateUtil.date2String(new Date()));
+            dateList.add(DateUtil.date2String(DateUtil.getDateAfter(new Date(), 1)));
+            dateList.add(DateUtil.date2String(DateUtil.getDateAfter(new Date(), 2)));
+            dateList.add(DateUtil.date2String(DateUtil.getDateAfter(new Date(), 3)));
+            dateList.add(DateUtil.date2String(DateUtil.getDateAfter(new Date(), 4)));
+            request.setAttribute("dateList", dateList);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
         return "court/courtInfoList";
     }
 

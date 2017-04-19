@@ -297,7 +297,8 @@ define([
                 if (res.code == 200) {
                     var d = res.data;
                     layer.open({
-                        area: ['500px', '550px'],
+                        area: '800px',
+                        shade: [0.8, '#393D49'],
                         title: "修改",
                         type: 1,
                         content: $("#addWin"),

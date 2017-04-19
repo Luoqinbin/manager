@@ -43,7 +43,7 @@ define([
                 "aTargets": [1],
                 "mRender": function (a, b, c, d) {
                     if (util.assertNotNullStr(a))
-                        return  moment(a).format("YYYY-MM-DD HH:mm:ss");
+                        return  moment(a).format("YYYY-MM-DD");
                     else
                         return "";
                 }

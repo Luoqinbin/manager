@@ -72,7 +72,7 @@
 
     <select id="queryBtnByRole" resultType="com.badminton.entity.system.SysResources" parameterType="map">
       select sr.id, sr.resource_type,sr. resource_name, sr.resource_desc, sr.resource_path, sr.resource_parent, sr.enable, sr.resource_icon, sr.order_no, sr.resource_level, sr.btn_style,sr. btn_index
-      from sys_resources sr where sr.id in (select srb.resouce_btn_id from sys_resouce_btn srb where srb.resouce_menu_id = #{menuId} and srb.role_id=${roleId})  and sr.btn_index=#{index}
+      from sys_resources sr where sr.id in (select srb.resouce_btn_id from sys_resouce_btn srb where srb.resouce_menu_id = #{menuId} and srb.role_id=#{roleId})  and sr.btn_index=#{index}
       and sr.enable = 1
         order by sr.btn_index,sr.order_no asc
     </select>

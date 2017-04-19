@@ -59,7 +59,8 @@ define([
                 $("#userId").val("");
                 $("#passwordPwd").show();
                layer.open({
-                   area: ['500px', '500px'],
+                   area: '800px',
+                   shade: [0.8, '#393D49'],
                    title: "添加用户",
                    type: 1,
                    content: $("#addWin"),
@@ -161,7 +162,8 @@ define([
                     $("#roleId").empty();
                     $("#roleId").append(option);
                     layer.open({
-                        area: ['500px', '450px'],
+                        area: '800px',
+                        shade: [0.8, '#393D49'],
                         title: "修改",
                         type: 1,
                         content: $("#addWin"),
