@@ -24,9 +24,9 @@ public class CourtInfoServiceImpl implements CourtInfoService {
         if (courtInfo != null){
             if (courtInfo.getOrderDir().equals("asc")) {
                 Condition condition = Condition.build() ;
-                courtInfo.setCondition(condition.addOrder(courtInfo.getOrderColumn(), OrderCondition.Direction.ASC));
+                courtInfo.setCondition(condition.addOrder(courtInfo.getOrderColumn(), OrderCondition.Direction.ASC).addOrder("name", OrderCondition.Direction.ASC));
             } else if (courtInfo.getOrderDir().equals("desc")) {
-                courtInfo.setCondition(Condition.build().addOrder(courtInfo.getOrderColumn(), OrderCondition.Direction.DESC));
+                courtInfo.setCondition(Condition.build().addOrder(courtInfo.getOrderColumn(), OrderCondition.Direction.DESC).addOrder("name", OrderCondition.Direction.DESC));
             }
         }
 

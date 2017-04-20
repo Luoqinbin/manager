@@ -71,12 +71,12 @@ public class CourtInfoController {
 
         query = pageUtils.sort(query, request, "area", "asc", null);
         List<CourtInfo> list = courtInfoService.query(query);
-        list.sort(new Comparator<CourtInfo>() {
+/*        list.sort(new Comparator<CourtInfo>() {
             @Override
             public int compare(CourtInfo o1, CourtInfo o2) {
                 return o1.getName().compareTo(o2.getName());
             }
-        });
+        });*/
         PageResult<CourtInfo> result = new PageResult<CourtInfo>(new PageInfo<CourtInfo>(list));
         return result;
     }
