@@ -82,8 +82,10 @@ public class FixedOrderController {
             fixedOrder.setConsume(((ei-si)*fixedOrder.getPrice())+"");
             if(StringUtils.isNotEmpty( fixedOrder.getCourtInfoId())) {
                CourtInfo courtInfo = this.courtInfoService.queryId(fixedOrder.getCourtInfoId());
-               fixedOrder.setAreaStr(courtInfo.getArea());
-               fixedOrder.setNoStr(courtInfo.getName()+"");
+               if(courtInfo!=null) {
+                   fixedOrder.setAreaStr(courtInfo.getArea());
+                   fixedOrder.setNoStr(courtInfo.getName() + "");
+               }
             }
         }
         PageResult<FixedOrder> result = new PageResult<FixedOrder>(new PageInfo<FixedOrder>(list));

@@ -96,7 +96,7 @@ public class CourtProductServiceImpl implements CourtProductService {
     }
 
     @Override
-    public String updateProductFixeOrder(FixedOrder fixedOrder, String cycel, String start, String end, String startTime, String endTime, String courtInfoId) throws Exception {
+    public String updateProductFixeOrder(FixedOrder fixedOrder, String cycel, String start, String end, String startTime, String endTime, String courtInfoId,String number) throws Exception {
         //周期
         int index = 0;
         int listSize = 0;
@@ -138,7 +138,7 @@ public class CourtProductServiceImpl implements CourtProductService {
                             customer.setRefundState(0);
                             customer.setPerson(fixedOrder.getName());
                             customer.setCreatedDt(new Date());
-                            customer.setMemberNum("固定场预定");
+                            customer.setMemberNum(number);
                             long id = new TimestampPkGenerator().next(getClass());
                             customer.setId(id);
                             customer.setFixedOrderId(fixedOrder.getId() + "");

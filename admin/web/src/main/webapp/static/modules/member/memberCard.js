@@ -134,7 +134,8 @@ define([
         },
         add:function () {
             util.openLayer({
-                area: ['530px', '600px'],
+                area: '800px',
+                shade: [0.8, '#393D49'],
                 title: "新增",
                 type: 1,
                 content: $("#addWin"),

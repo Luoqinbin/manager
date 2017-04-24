@@ -88,6 +88,7 @@ public class FixedOrderServiceImpl implements FixedOrderService {
         f.setCycle(fixedOrder.getCycle());
         f.setCourtInfoId(fixedOrder.getCourtInfoId());
         FixedOrder fo = this.queryOne(f);
+        String number = "";
         if(fo==null) {
             //查询支付方式
             if (fixedOrder.getPayWay().equals("6")){
@@ -95,6 +96,7 @@ public class FixedOrderServiceImpl implements FixedOrderService {
                 MemberInfo memberInfo = new MemberInfo();
                 memberInfo.setPhone(fixedOrder.getPhone());
                 MemberInfo m = this.memberInfoService.queryOne(memberInfo);
+                number = m.getNumber();
                 if (m == null) {
                     baseResult.setMessage("没有找到储值卡，请检查手机号码是否正确!");
                     baseResult.setCode(BaseResult.CODE_FAIL);
@@ -103,7 +105,7 @@ public class FixedOrderServiceImpl implements FixedOrderService {
                     //扣费
                     Double dou = m.getAccount() - fixedOrder.getPrice();
                     if (m.getAccount() >= fixedOrder.getPrice()) {
-                        m.setAccount(m.getAccount() - fixedOrder.getPrice());
+                        m.setAccount(dou);
                         this.memberInfoService.update(m);
                         //添加记录
                         FlowRecord flowRecord = new FlowRecord();
@@ -120,7 +122,7 @@ public class FixedOrderServiceImpl implements FixedOrderService {
                     }
                 }
             }
-            this.courtProductService.updateProductFixeOrder(fixedOrder,fixedOrder.getCycle(), fixedOrder.getStartDateStr(), fixedOrder.getEndDateStr(), fixedOrder.getStartTime(), fixedOrder.getEndTime(), fixedOrder.getCourtInfoId());
+            this.courtProductService.updateProductFixeOrder(fixedOrder,fixedOrder.getCycle(), fixedOrder.getStartDateStr(), fixedOrder.getEndDateStr(), fixedOrder.getStartTime(), fixedOrder.getEndTime(), fixedOrder.getCourtInfoId(),number);
             /*if(flag.equals("1")){
                 baseResult.setCode(BaseResult.CODE_FAIL);
                 baseResult.setMessage("订场失败");
@@ -135,4 +137,6 @@ public class FixedOrderServiceImpl implements FixedOrderService {
         }
         return baseResult;
     }
+
+
 }

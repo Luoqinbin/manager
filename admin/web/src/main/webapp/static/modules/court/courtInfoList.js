@@ -124,7 +124,8 @@ define([
         },
         yud:function (data) {
             util.openLayer({
-                area: ['500px', '400px'],
+                area: '800px',
+                shade: [0.8, '#393D49'],
                 title: "场地预定",
                 type: 1,
                 content: $("#addWin1"),
@@ -193,7 +194,8 @@ define([
         init:function (data) {
             var chk_value =[];
             util.openLayer({
-                area: ['500px', '400px'],
+                area: '800px',
+                shade: [0.8, '#393D49'],
                 title: "预定",
                 type: 1,
                 content: $("#addWin2"),
@@ -262,7 +264,8 @@ define([
         },
         add:function () {
             util.openLayer({
-                area: ['500px', '550px'],
+                area: '800px',
+                shade: [0.8, '#393D49'],
                 title: "新增",
                 type: 1,
                 content: $("#addWin"),

@@ -59,6 +59,12 @@
                 </div>
             </div>
             <div class="col-sm-3">
+                <label class="control-label col-md-3">卡号：</label>
+                <div class="input-group">
+                    <input class="form-control" placeholder="卡号" name="memberNum" id="memberNumQuery" type="text" autofocus>
+                </div>
+            </div>
+            <div class="col-sm-3">
                 <label class="control-label col-md-3">区域：</label>
                 <div class="input-group">
                    <select id="areaQuery" class="select" style="width: 150px">
@@ -69,7 +75,10 @@
                    </select>
                 </div>
             </div>
-            <button type="button" id="query" class="btn btn-primary"><i class="glyphicon glyphicon-search"></i>查询
+            <br/>
+            <br/>
+            <br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button type="button" id="query" class="btn btn-primary"><i class="glyphicon glyphicon-search"></i>查询
             </button>
         </form>
         <br/>

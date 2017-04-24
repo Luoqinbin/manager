@@ -42,7 +42,8 @@ define([
             $("#import").bind("click",function () {
                 $("#uploadForm")[0].reset();
                     util.openLayer({
-                        area: ['600px', '200px'],
+                        area: '800px',
+                        shade: [0.8, '#393D49'],
                         title: "导入",
                         type: 1,
                         content: $("#uploadWin"),
@@ -174,7 +175,8 @@ define([
         },
         add:function () {
             util.openLayer({
-                area: ['500px', '600px'],
+                area: '800px',
+                shade: [0.8, '#393D49'],
                 title: "新增",
                 type: 1,
                 content: $("#addWin"),

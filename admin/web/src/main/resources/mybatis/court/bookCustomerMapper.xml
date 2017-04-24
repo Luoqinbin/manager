@@ -39,6 +39,9 @@
         <if test="nameInfo!=null and nameInfo != ''">
             and v.name = #{nameInfo}
         </if>
+        <if test="memberNum!=null and memberNum != ''">
+            and bc.member_num  = #{memberNum}
+        </if>
         ORDER BY name ,startTime asc
     </select>
 </mapper>

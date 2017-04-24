@@ -166,7 +166,8 @@ define([
             $("#type").select2('val','');
             $("#payWay").select2('val','');
             util.openLayer({
-                area: ['550px', '800px'],
+                area: '800px',
+                shade: [0.8, '#393D49'],
                 title: "新增",
                 type: 1,
                 content: $("#addWin"),

@@ -19,7 +19,7 @@ public interface CourtProductService {
 
     public void update(CourtProduct courtProduct) throws Exception;
 
-    public String updateProductFixeOrder(FixedOrder fixedOrder,String cycel, String start, String end, String startTime, String endTime, String courtInfoId) throws Exception;
+    public String updateProductFixeOrder(FixedOrder fixedOrder,String cycel, String start, String end, String startTime, String endTime, String courtInfoId,String number) throws Exception;
 
 
     public List<CourtProduct> queryByType(CourtProduct courtProduct);

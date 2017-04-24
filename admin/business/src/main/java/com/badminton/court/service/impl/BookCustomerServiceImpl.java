@@ -10,7 +10,9 @@ import com.badminton.entity.court.CourtProduct;
 import com.badminton.entity.court.FlowRecord;
 import com.badminton.entity.court.query.BookCustomerInfoQuery;
 import com.badminton.entity.member.MemberInfo;
+import com.badminton.entity.system.SysHoliday;
 import com.badminton.member.service.IMemberInfoService;
+import com.badminton.member.service.SysHolidayService;
 import com.badminton.result.BaseResult;
 import com.badminton.utils.DateUtil;
 import com.badminton.utils.TimestampPkGenerator;
@@ -19,6 +21,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -38,6 +41,8 @@ public class BookCustomerServiceImpl implements BookCustomerService{
     private CourtInfoService courtInfoService;
     @Autowired
     private CourtProductService courtProductService;
+    @Autowired
+    private SysHolidayService sysHolidayService;
 
     @Override
     public List<BookCustomerInfoQuery> query(BookCustomer customer) {
@@ -79,6 +84,7 @@ public class BookCustomerServiceImpl implements BookCustomerService{
                 num++;
             }
         }
+        String number = "";
         if(num>0){
             baseResult.setMessage("预订失败，该场地已经被人预定");
             baseResult.setCode(BaseResult.CODE_FAIL);
@@ -90,15 +96,17 @@ public class BookCustomerServiceImpl implements BookCustomerService{
                 MemberInfo memberInfo = new MemberInfo();
                 memberInfo.setPhone(phone);
                 MemberInfo m = this.memberInfoService.queryOne(memberInfo);
+                number = m.getNumber();
                 if (m == null) {
                     baseResult.setMessage("没有找到储值卡，请检查手机号码是否正确!");
                     baseResult.setCode(BaseResult.CODE_FAIL);
                     return baseResult;
                 } else {
                     //扣费
-                    Double dou = m.getAccount() - Double.parseDouble(price);
+
+                    double dou = m.getAccount() - Double.parseDouble(price);
                     if (m.getAccount() >= Double.parseDouble(price)) {
-                        m.setAccount(m.getAccount() - Double.parseDouble(price));
+                        m.setAccount(dou);
                         this.memberInfoService.update(m);
                         //添加记录
                         FlowRecord flowRecord = new FlowRecord();
@@ -131,7 +139,7 @@ public class BookCustomerServiceImpl implements BookCustomerService{
                 customer.setPerson(person);
                 customer.setPrice(Double.parseDouble(dd));
                 customer.setId(new TimestampPkGenerator().next(getClass()));
-                customer.setMemberNum("普通场预定");
+                customer.setMemberNum(number);
                 courtProduct.setState(3);
                 customer.setNote(startTime + "-" + endTime);
                 this.courtProductService.update(courtProduct);
@@ -141,5 +149,19 @@ public class BookCustomerServiceImpl implements BookCustomerService{
             baseResult.setCode(BaseResult.CODE_OK);
             return baseResult;
         }
+    }
+
+    public Boolean isBusyTime(Date date, Boolean isHoliday){
+        if(isHoliday){
+            //节假日全天都是忙时
+            return true;
+        }
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        //平时16点前为闲时
+        cal.set(Calendar.HOUR_OF_DAY, 16);
+        cal.set(Calendar.MINUTE, 0);
+        cal.set(Calendar.SECOND, 0);
+        return !date.before(cal.getTime());
     }
 }

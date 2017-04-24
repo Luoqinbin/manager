@@ -59,7 +59,7 @@ public class MemberCardServiceImpl implements IMemberCardService {
     @Override
     public List<MemberCard> queryAll() {
         MemberCard memberCard=new MemberCard();
-        memberCard.setStatus("1");
+       // memberCard.setStatus("1");
         return memberCardMapper.select(memberCard);
     }
 }

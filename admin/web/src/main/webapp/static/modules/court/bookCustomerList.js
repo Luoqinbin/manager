@@ -27,7 +27,7 @@ define([
         __initDataTable:function () {
             var aoColumns = [
                 {"mData": "id"},
-                {"mData": "createdDt"},
+                {"mData": "startTime"},
                 {"mData": "area"},
                 {"mData": "name"},
                 {"mData": "startTime"},
@@ -87,9 +87,11 @@ define([
                 var phoneQuery = $("#phoneQuery").val();
                 var createdDtQuery = $("#createdDtQuery").val();
                 var areaQuery = $("#areaQuery").val();
+                var memberNumQuery = $("#memberNumQuery").val();
                 if (util.assertNotNullStr(phoneQuery)) condition.phone = phoneQuery;
                 if (util.assertNotNullStr(createdDtQuery)) condition.createdDtQuery = createdDtQuery;
                 if (util.assertNotNullStr(areaQuery)) condition.areaQuery = areaQuery;
+                if (util.assertNotNullStr(memberNumQuery)) condition.memberNum = memberNumQuery;
             },
             __initHandler:function () {
 
@@ -98,7 +100,8 @@ define([
 
         add:function () {
             util.openLayer({
-                area: ['700px', '400px'],
+                area: '800px',
+                shade: [0.8, '#393D49'],
                 title: "",
                 type: 1,
                 content: $("#addWin"),
@@ -151,7 +154,8 @@ define([
 
             var area =  $('#area option:selected').val();//区域
             util.openLayer({
-                area: ['500px', '400px'],
+                area: '800px',
+                shade: [0.8, '#393D49'],
                 title: "预定",
                 type: 1,
                 content: $("#addWin1"),
