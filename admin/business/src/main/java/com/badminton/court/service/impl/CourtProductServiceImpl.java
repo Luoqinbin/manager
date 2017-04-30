@@ -13,7 +13,8 @@ import com.badminton.interceptors.mySqlHelper.conditionHelper.query.OrderConditi
 import com.badminton.interceptors.mySqlHelper.pagehelper.util.StringUtil;
 import com.badminton.utils.DateUtil;
 import com.badminton.utils.TimestampPkGenerator;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -27,7 +28,7 @@ import java.util.List;
  */
 @Service("courtProductService")
 public class CourtProductServiceImpl implements CourtProductService {
-    private Logger logger = Logger.getLogger(getClass());
+    private Logger logger = LoggerFactory.getLogger(getClass());
     @Autowired
     private CourtProductMapper courtProductMapper;
     @Autowired
