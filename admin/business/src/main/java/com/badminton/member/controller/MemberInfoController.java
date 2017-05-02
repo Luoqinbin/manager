@@ -139,7 +139,7 @@ public class MemberInfoController {
         return baseResult;
     }
 
-    @RequestMapping(value = "queryById", method = RequestMethod.POST)
+    @RequestMapping(value = "queryById")
     @ResponseBody
     public BaseResult queryById(Long id) {
         BaseResult baseResult = new BaseResult();

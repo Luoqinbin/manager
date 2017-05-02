@@ -41,7 +41,7 @@ public class MemberInfo extends BaseEntity {
     private String typeName;
     @Transient
     private String carPrice;
-@Transient
+    @Transient
     private String payWay;
 
     public String getNumber() {

@@ -120,4 +120,14 @@ public class MemberInfoServiceImpl implements IMemberInfoService {
     public MemberInfo queryOne(MemberInfo memberInfo) {
         return memberInfoMapper.selectOne(memberInfo);
     }
+
+    @Override
+    public MemberInfo queryByNumberOrPhone(String number, String phone) {
+        List<MemberInfo> list = memberInfoMapper.queryByNumberOrPhone(number,phone);
+        MemberInfo memberInfo = null;
+        if (list!=null&&list.size()>0){
+            memberInfo = list.get(0);
+        }
+        return memberInfo;
+    }
 }

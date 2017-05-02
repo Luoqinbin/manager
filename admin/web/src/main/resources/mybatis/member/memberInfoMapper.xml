@@ -6,4 +6,16 @@
     <select id="maxNumber" resultType="java.lang.Long" parameterType="map">
         select max(number) FROM member_info m where m.type = #{typeId}
     </select>
+
+    <select id="queryByNumberOrPhone" resultType="com.badminton.entity.member.MemberInfo" parameterType="map">
+       select `id` as id, `number` as number, `name` as name, `type` as type, `phone` as phone, `crated_dt` as cratedDt, `expire_dt` as expireDt,
+        `empty_discount` as emptyDiscount, `busy_discount` as busyDiscount, `account` as account, `pay_price` as payPrice, `status` as status, `weichat` as weichat, `comments` as comments
+        from member_info m where 1=1
+        <if test="number!=null  and number!='' ">
+            and m.number=#{number}
+        </if>
+        <if test="phone!=null  and phone!='' ">
+            and m.phone=#{phone}
+        </if>
+    </select>
 </mapper>

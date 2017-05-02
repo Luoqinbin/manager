@@ -30,5 +30,8 @@ public interface IMemberInfoService {
 
     public MemberInfo queryOne(MemberInfo memberInfo);
 
+
+    public MemberInfo queryByNumberOrPhone(String number,String card);
+
 }
 

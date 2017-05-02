@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<!--[if IE 8]> <html lang="zh_ch" class="ie8 no-js"> <![endif]-->
+<!--[if IE 9]> <html lang="zh_ch" class="ie9 no-js"> <![endif]-->
+<!--[if !IE]><!-->
+<html lang="zh_ch" class="no-js">
+<!--<![endif]-->
+<!-- BEGIN HEAD -->
+<head>
+    <base href="${basePath}">
+    <meta charset="utf-8"/>
+    <title>后台管理系统</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta content="width=device-width, initial-scale=1" name="viewport"/>
+    <meta content="" name="description"/>
+    <meta content="" name="author"/>
+    <!-- BEGIN GLOBAL MANDATORY STYLES -->
+    <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&subset=all" rel="stylesheet" type="text/css"/>
+    <link href="static/metronic/assets/global/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
+    <link href="static/metronic/assets/global/plugins/simple-line-icons/simple-line-icons.min.css" rel="stylesheet"  type="text/css"/>
+    <link href="static/metronic/assets/global/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet"  type="text/css"/>
+    <link href="static/metronic/assets/global/plugins/uniform/css/uniform.default.css" rel="stylesheet"   type="text/css"/>
+    <link href="static/metronic/assets/global/plugins/bootstrap-switch/css/bootstrap-switch.min.css" rel="stylesheet"   type="text/css"/>
+    <!-- END GLOBAL MANDATORY STYLES -->
+    <!-- BEGIN PAGE LEVEL PLUGIN STYLES -->
+    <link href="static/metronic/assets/global/plugins/bootstrap-daterangepicker/daterangepicker-bs3.css"  rel="stylesheet" type="text/css"/>
+    <link href="static/metronic/assets/global/plugins/fullcalendar/fullcalendar.min.css" rel="stylesheet" type="text/css"/>
+    <!-- END PAGE LEVEL PLUGIN STYLES -->
+    <!-- BEGIN PAGE STYLES -->
+    <link href="static/metronic/assets/admin/pages/css/tasks.css" rel="stylesheet" type="text/css"/>
+    <!-- END PAGE STYLES -->
+    <!-- BEGIN THEME STYLES -->
+    <link href="static/metronic/assets/global/css/components.css" id="style_components" rel="stylesheet"  type="text/css"/>
+    <link href="static/metronic/assets/global/css/plugins.css" rel="stylesheet" type="text/css"/>
+    <link href="static/metronic/assets/admin/layout/css/layout.css" rel="stylesheet" type="text/css"/>
+    <link href="static/metronic/assets/admin/layout/css/themes/darkblue.css" rel="stylesheet" type="text/css"id="style_color"/>
+    <link href="static/metronic/assets/admin/layout/css/custom.css" rel="stylesheet" type="text/css"/>
+    <!-- END THEME STYLES -->
+    <link rel="shortcut icon" href="favicon.ico"/>
+</head>
+
+<body style="background-color: #f3f3fa">
+<input type="hidden" id="csrfName" value="${_csrf.parameterName}"/>
+<input type="hidden" id="csrfToken" value="${_csrf.token}"/>
+<div class="page-bar">
+    <div class="row">
+        <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+            <div class="dashboard-stat red-intense">
+                <div class="visual">
+                    <i class="fa fa-bar-chart-o"></i>
+                </div>
+                <div class="details">
+                    <div class="number">
+                        $!countArea4F/$!countOrderArea4F
+                    </div>
+                    <div class="desc">
+                        4楼订场情况
+                    </div>
+                </div>
+                <a class="more" href="javascript:;">
+                    <br/>
+                </a>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+            <div class="dashboard-stat blue-madison">
+                <div class="visual">
+                    <i class="fa fa-comments"></i>
+                </div>
+                <div class="details">
+                    <div class="number">
+                        $!countArea5F/$!countOrderArea5F
+                    </div>
+                    <div class="desc">
+                        5楼订场情况
+                    </div>
+                </div>
+                <a class="more" href="javascript:;">
+                    <br/>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="clearfix">
+</div>
+#if($listBtn!="")
+    <div class="row">
+        <div class="col-md-12 col-sm-12">
+            <!-- BEGIN PORTLET-->
+            <div class="portlet light ">
+                <div class="portlet-title">
+                    <div class="caption">
+                        <i class="icon-bar-chart font-green-sharp hide"></i>
+                        <span class="caption-subject font-green-sharp bold uppercase">快捷操作</span>
+                    </div>
+                </div>
+                <div class="portlet-body">
+                    <div class="row">
+                        <div class="col-md-offset-3 col-md-9">
+
+                                #*<button type="submit" class="btn green">办理新卡</button>
+                                <button type="button" class="btn default">充值</button>*#
+                            ${listBtn}
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- END PORTLET-->
+        </div>
+    </div>
+#end
+<div class="row">
+    <div class="col-md-12">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="portlet box green-haze">
+                    <div class="portlet-title">
+                        <div class="caption">
+                            <i class="icon-settings"></i> 场地信息
+                        </div>
+                        <ul class="nav nav-tabs">
+                            <li class="active">
+                                <a href="#portlet_tab_2_1" data-toggle="tab">
+                                    4楼 </a>
+                            </li>
+                            <li>
+                                <a href="#portlet_tab_2_2" data-toggle="tab">
+                                    5楼 </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="portlet-body form">
+                        <div class="tab-content">
+                            <div class="tab-pane active" id="portlet_tab_2_1">
+                                <div class="skin skin-minimal">
+                                    <form class="form-horizontal" role="form">
+                                        <div class="form-body">
+                                            <div class="form-group">
+                                                <label class="col-md-4 control-label">
+                                                    1 Schemes </label>
+                                                <div class="col-md-8">
+                                                    <div class="input-group">
+                                                        <ul class="icheck-colors">
+                                                            <li>
+                                                            </li>
+                                                            <li class="red">
+                                                            </li>
+                                                            <li class="green">
+                                                            </li>
+                                                            <li class="blue">
+                                                            </li>
+                                                            <li class="aero">
+                                                            </li>
+                                                            <li class="grey active">
+                                                            </li>
+                                                            <li class="orange">
+                                                            </li>
+                                                            <li class="pink">
+                                                            </li>
+                                                            <li class="purple">
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="col-md-4 control-label">
+                                                    Checkbox List </label>
+                                                <div class="col-md-8">
+                                                    <div class="input-group">
+                                                        <div class="icheck-list">
+                                                            <label>
+                                                                <div class="icheckbox_minimal-grey" style="position: relative;"><input type="checkbox" class="icheck" style="position: absolute; opacity: 0;"><ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins></div> Checkbox 1 </label>
+                                                            <label>
+                                                                <div class="icheckbox_minimal-grey checked" style="position: relative;"><input type="checkbox" checked="" class="icheck" style="position: absolute; opacity: 0;"><ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins></div> Checkbox 2 </label>
+                                                            <label>
+                                                                <div class="icheckbox_minimal-grey" style="position: relative;"><input type="checkbox" class="icheck" style="position: absolute; opacity: 0;"><ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins></div> Checkbox 3 </label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="col-md-4 control-label">Inline</label>
+                                                <div class="col-md-8">
+                                                    <div class="input-group">
+                                                        <div class="icheck-inline">
+                                                            <label class="">
+                                                                <div class="icheckbox_minimal-grey" style="position: relative;"><input type="checkbox" class="icheck" style="position: absolute; opacity: 0;"><ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins></div> Checkbox 1 </label>
+                                                            <label>
+                                                                <div class="icheckbox_minimal-grey checked" style="position: relative;"><input type="checkbox" checked="" class="icheck" style="position: absolute; opacity: 0;"><ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins></div> Checkbox 2 </label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="col-md-4 control-label">Radio List</label>
+                                                <div class="col-md-8">
+                                                    <div class="input-group">
+                                                        <div class="icheck-list">
+                                                            <label class="">
+                                                                <div class="iradio_minimal-grey" style="position: relative;"><input type="radio" name="radio1" class="icheck" style="position: absolute; opacity: 0;"><ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins></div> Radio Button 1 </label>
+                                                            <label>
+                                                                <div class="iradio_minimal-grey checked" style="position: relative;"><input type="radio" name="radio1" checked="" class="icheck" style="position: absolute; opacity: 0;"><ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins></div> Radio Button 2 </label>
+                                                            <label>
+                                                                <div class="iradio_minimal-grey" style="position: relative;"><input type="radio" name="radio1" class="icheck" style="position: absolute; opacity: 0;"><ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins></div> Radio Button 3 </label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="col-md-4 control-label">Inline Radios</label>
+                                                <div class="col-md-8">
+                                                    <div class="input-group">
+                                                        <div class="icheck-inline">
+                                                            <label class="">
+                                                                <div class="iradio_minimal-grey" style="position: relative;"><input type="radio" name="radio2" class="icheck" style="position: absolute; opacity: 0;"><ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins></div> Radio Button 1 </label>
+                                                            <label>
+                                                                <div class="iradio_minimal-grey checked" style="position: relative;"><input type="radio" name="radio2" checked="" class="icheck" style="position: absolute; opacity: 0;"><ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins></div> Radio Button 2 </label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                            <div class="tab-pane" id="portlet_tab_2_2">
+                                <div class="skin skin-square">
+                                    <form class="form-horizontal" role="form">
+                                        <div class="form-body">
+                                            <div class="form-group">
+                                                <label class="col-md-4 control-label">
+                                                    Colors Schemes </label>
+                                                <div class="col-md-8">
+                                                    <div class="input-group">
+                                                        <ul class="icheck-colors">
+                                                            <li>
+                                                            </li>
+                                                            <li class="red">
+                                                            </li>
+                                                            <li class="green">
+                                                            </li>
+                                                            <li class="blue">
+                                                            </li>
+                                                            <li class="aero">
+                                                            </li>
+                                                            <li class="grey active">
+                                                            </li>
+                                                            <li class="orange">
+                                                            </li>
+                                                            <li class="pink">
+                                                            </li>
+                                                            <li class="purple">
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="col-md-4 control-label">
+                                                    Checkbox List </label>
+                                                <div class="col-md-8">
+                                                    <div class="input-group">
+                                                        <div class="icheck-list">
+                                                            <label>
+                                                                <div class="icheckbox_square-grey" style="position: relative;"><input type="checkbox" class="icheck" data-checkbox="icheckbox_square-grey" style="position: absolute; opacity: 0;"><ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins></div> Checkbox 1 </label>
+                                                            <label>
+                                                                <div class="icheckbox_square-grey checked" style="position: relative;"><input type="checkbox" checked="" class="icheck" data-checkbox="icheckbox_square-grey" style="position: absolute; opacity: 0;"><ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins></div> Checkbox 2 </label>
+                                                            <label>
+                                                                <div class="icheckbox_square-grey" style="position: relative;"><input type="checkbox" class="icheck" data-checkbox="icheckbox_square-grey" style="position: absolute; opacity: 0;"><ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins></div> Checkbox 3 </label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="col-md-4 control-label">Inline</label>
+                                                <div class="col-md-8">
+                                                    <div class="input-group">
+                                                        <div class="icheck-inline">
+                                                            <label>
+                                                                <div class="icheckbox_square-grey" style="position: relative;"><input type="checkbox" class="icheck" data-checkbox="icheckbox_square-grey" style="position: absolute; opacity: 0;"><ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins></div> Checkbox 1 </label>
+                                                            <label>
+                                                                <div class="icheckbox_square-grey checked" style="position: relative;"><input type="checkbox" checked="" class="icheck" data-checkbox="icheckbox_square-grey" style="position: absolute; opacity: 0;"><ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins></div> Checkbox 2 </label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="col-md-4 control-label">Radio List</label>
+                                                <div class="col-md-8">
+                                                    <div class="input-group">
+                                                        <div class="icheck-list">
+                                                            <label>
+                                                                <div class="iradio_square-grey" style="position: relative;"><input type="radio" name="radio1" class="icheck" data-radio="iradio_square-grey" style="position: absolute; opacity: 0;"><ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins></div> Radio Button 1 </label>
+                                                            <label>
+                                                                <div class="iradio_square-grey checked" style="position: relative;"><input type="radio" name="radio1" checked="" class="icheck" data-radio="iradio_square-grey" style="position: absolute; opacity: 0;"><ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins></div> Radio Button 2 </label>
+                                                            <label>
+                                                                <div class="iradio_square-grey" style="position: relative;"><input type="radio" name="radio1" class="icheck" data-radio="iradio_square-grey" style="position: absolute; opacity: 0;"><ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins></div> Radio Button 3 </label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="col-md-4 control-label">Inline Radios</label>
+                                                <div class="col-md-8">
+                                                    <div class="input-group">
+                                                        <div class="icheck-inline">
+                                                            <label>
+                                                                <div class="iradio_square-grey" style="position: relative;"><input type="radio" name="radio2" class="icheck" data-radio="iradio_square-grey" style="position: absolute; opacity: 0;"><ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins></div> Radio Button 1 </label>
+                                                            <label>
+                                                                <div class="iradio_square-grey checked" style="position: relative;"><input type="radio" name="radio2" checked="" class="icheck" data-radio="iradio_square-grey" style="position: absolute; opacity: 0;"><ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins></div> Radio Button 2 </label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="addWin" style="display: none;width: 99%" class="portlet-body form">
+    <form role="form" action="memberInfo/addOrUpdate" method="post" id="form" class="form-horizontal form-validate">
+        <input type="hidden" value="${_csrf.token}" name="${_csrf.parameterName}">
+        <input type="hidden" value="" name="id" id="userId">
+        <div class="form-body">
+            <div class="form-group">
+                <label class="control-label col-md-3">储值卡卡号：
+                </label>
+                <div class="col-md-8">
+                    <input type="text" class="form-control" data-required="1" readonly id="number" name="number"
+                           placeholder="储值卡卡号">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-md-3">卡类型：<span class="required">* </span>
+                </label>
+                <div class="col-md-8">
+                    <select class="select form-control" style="width: 150px" id="type" name="type">
+                        <option value="">请选择</option>
+                        #foreach($item in $list)
+                            <option value="$item.id">$item.name</option>
+                        #end
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-md-3">卡额：<span class="required">* </span>
+                </label>
+                <div class="col-md-8">
+                    <input class="form-control" name="carPrice" readonly id="carPrice" >
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                <label class="control-label col-md-3">手机号：<span class="required">* </span>
+                </label>
+                <div class="col-md-8">
+                    <input class="form-control" name="phone" id="phone" placeholder="请输入手机号">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-md-3">姓名：<span class="required">* </span>
+                </label>
+                <div class="col-md-8">
+                    <input class="form-control" name="name" id="name" placeholder="请输入姓名">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-md-3">支付方式：<span class="required">* </span>
+                </label>
+                <div class="col-md-8">
+                    <select class="form-control" name="payWay" id="payWay" placeholder="请选择">
+                        <option value="">请选择</option>
+                        <option value="1">现金支付</option>
+                        <option value="2">刷卡支付</option>
+                        <option value="3">转账-农商行0549</option>
+                        <option value="4">转账-中信</option>
+                        <option value="5">微信-中信</option>
+                        <option value="6">支付宝</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<div id="rechargeInit" style="display: none;width: 99%" class="portlet-body form">
+    <form role="form" action="#" method="post" id="rechargeInitForm" class="form-horizontal form-validate">
+        <input type="hidden" value="${_csrf.token}" name="${_csrf.parameterName}">
+        <div class="form-body">
+            <div class="form-group">
+                <label class="control-label col-md-3">储值卡卡号：
+                </label>
+                <div class="col-md-8">
+                    <input type="text" class="form-control" id="numberCard" name="number"
+                           placeholder="请输入储值卡卡号">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-md-3">手机号：
+                </label>
+                <div class="col-md-8">
+                    <input class="form-control" name="phone" id="phoneCard" placeholder="请输入手机号">
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<div id="recharge2" style="display: none;width: 99%" class="portlet-body form">
+    <form role="form" action="memberOrder/recharge" method="post" id="rechargeForm" class="form-horizontal form-validate">
+        <input type="hidden" value="${_csrf.token}" name="${_csrf.parameterName}">
+        <input type="hidden" value="" name="id" id="userIds">
+        <div class="form-body">
+            <div class="form-group">
+                <label class="control-label col-md-3">手机号：
+                </label>
+                <div class="col-md-8">
+                    <input type="text" class="form-control"  readonly id="phone" name="phone">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-md-3">姓名：
+                </label>
+                <div class="col-md-8">
+                    <input class="form-control" name="name" readonly id="name" >
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-md-3">卡额：
+                </label>
+                <div class="col-md-8">
+                    <input class="form-control" name="carPrice" readonly id="carPrice" >
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-md-3">余额：
+                </label>
+                <div class="col-md-8">
+                    <input class="form-control" name="account" readonly id="account" >
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-md-3">到期日：
+                </label>
+                <div class="col-md-8">
+                    <input class="form-control" name="expiredt" readonly id="expiredt">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-md-3">充值金额：<span class="required">* </span>
+                </label>
+                <div class="col-md-8">
+                    <input class="form-control" name="rechargePrice" id="rechargePrice" placeholder="请输入充值金额">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-md-3">支付方式：<span class="required">* </span>
+                </label>
+                <div class="col-md-8">
+                    <select class="form-control" name="payWay" id="payWay" placeholder="请选择">
+                        <option value="">请选择</option>
+                        <option value="1">现金支付</option>
+                        <option value="2">刷卡支付</option>
+                        <option value="3">转账-农商行0549</option>
+                        <option value="4">转账-中信</option>
+                        <option value="5">微信-中信</option>
+                        <option value="6">支付宝</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-md-3">备注：
+                </label>
+                <div class="col-md-8">
+                    <textarea cols="40" rows="5" name="comment"></textarea>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<!-- BEGIN CORE PLUGINS -->
+<!--[if lt IE 9]>
+<script src="static/metronic/assets/global/plugins/respond.min.js"></script>
+<script src="static/metronic/assets/global/plugins/excanvas.min.js"></script>
+<![endif]-->
+<script src="static/metronic/assets/global/plugins/jquery.min.js" type="text/javascript"></script>
+<script src="static/metronic/assets/global/plugins/jquery-migrate.min.js" type="text/javascript"></script>
+<!-- IMPORTANT! Load jquery-ui.min.js before bootstrap.min.js to fix bootstrap tooltip conflict with jquery ui tooltip -->
+<script src="static/metronic/assets/global/plugins/jquery-ui/jquery-ui.min.js" type="text/javascript"></script>
+<script src="static/metronic/assets/global/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+<script src="static/metronic/assets/global/plugins/bootstrap-hover-dropdown/bootstrap-hover-dropdown.min.js"
+        type="text/javascript"></script>
+<script src="static/metronic/assets/global/plugins/jquery-slimscroll/jquery.slimscroll.min.js"
+        type="text/javascript"></script>
+<script src="static/metronic/assets/global/plugins/jquery.blockui.min.js" type="text/javascript"></script>
+<script src="static/metronic/assets/global/plugins/jquery.cokie.min.js" type="text/javascript"></script>
+<script src="static/metronic/assets/global/plugins/uniform/jquery.uniform.min.js" type="text/javascript"></script>
+<script src="static/metronic/assets/global/plugins/bootstrap-switch/js/bootstrap-switch.min.js"
+        type="text/javascript"></script>
+<!-- END CORE PLUGINS -->
+<!-- BEGIN PAGE LEVEL PLUGINS -->
+<script src="static/metronic/assets/global/plugins/flot/jquery.flot.min.js" type="text/javascript"></script>
+<script src="static/metronic/assets/global/plugins/flot/jquery.flot.resize.min.js" type="text/javascript"></script>
+<script src="static/metronic/assets/global/plugins/flot/jquery.flot.categories.min.js" type="text/javascript"></script>
+<script src="static/metronic/assets/global/plugins/jquery.pulsate.min.js" type="text/javascript"></script>
+<script src="static/metronic/assets/global/plugins/bootstrap-daterangepicker/moment.min.js" type="text/javascript"></script>
+<script src="static/metronic/assets/global/plugins/bootstrap-daterangepicker/daterangepicker.js" type="text/javascript"></script>
+<script src="static/metronic/assets/global/plugins/jquery-validation/js/jquery.validate.min.js" type="text/javascript"></script>
+<script src="static/metronic/assets/global/plugins/jquery-validation/js/localization/messages_zh.js" type="text/javascript"></script>
+<!-- IMPORTANT! fullcalendar depends on jquery-ui.min.js for drag & drop support -->
+<script src="static/metronic/assets/global/plugins/fullcalendar/fullcalendar.min.js" type="text/javascript"></script>
+<script src="static/metronic/assets/global/plugins/jquery-easypiechart/jquery.easypiechart.min.js" type="text/javascript"></script>
+<script src="static/metronic/assets/global/plugins/jquery.sparkline.min.js" type="text/javascript"></script>
+<!-- END PAGE LEVEL PLUGINS -->
+<!-- BEGIN PAGE LEVEL SCRIPTS -->
+<script src="static/metronic/assets/global/scripts/metronic.js" type="text/javascript"></script>
+<script src="static/metronic/assets/admin/layout/scripts/layout.js" type="text/javascript"></script>
+<script src="static/metronic/assets/admin/layout/scripts/demo.js" type="text/javascript"></script>
+<script src="static/modules/main/mainIndex.js" type="text/javascript"></script>
+<script src="static/layer/layer.js"></script>
+<script src="static/js/jquery.form.js"></script>
+<script src="static/requirejs-setup.js"></script>
+<script src="static/dojo/1.10.4/dojo/dojo.js"></script>
+<!-- END PAGE LEVEL SCRIPTS -->
+<script>
+    jQuery(document).ready(function () {
+        Metronic.init(); // init metronic core componets
+        Layout.init(); // init layout
+        Demo.init(); // init demo features
+        IndexMain.init();
+        require(["modules/home/index"], function (view) {
+            view.initPage();
+        });
+    });
+</script>
+<!-- END JAVASCRIPTS -->
+</body>
+
+</html>

@@ -9,6 +9,8 @@ import com.badminton.entity.member.query.MemberInfoQuery;
 import com.badminton.entity.member.query.MemberOrderQuery;
 import com.badminton.entity.member.query.MemberOrderRechargeQuery;
 import com.badminton.entity.system.SysUser;
+import com.badminton.interceptors.mySqlHelper.conditionHelper.query.Condition;
+import com.badminton.interceptors.mySqlHelper.conditionHelper.query.OrderCondition;
 import com.badminton.interceptors.mySqlHelper.pagehelper.PageInfo;
 import com.badminton.member.service.IMemberCardService;
 import com.badminton.member.service.IMemberInfoService;
@@ -27,6 +29,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -88,6 +91,12 @@ public class MemberOrderController {
         Double nowAccount = Double.parseDouble( request.getParameter("rechargePrice"));
         Double newAccount = oldAccount+nowAccount;
         memberInfo.setAccount(newAccount);
+        //更新有效期
+        MemberCard memberCard = this.memberCardService.queryId(Long.parseLong(memberInfo.getType()+""));
+        Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.MONTH,Integer.parseInt( memberCard.getLast()));
+        memberInfo.setExpireDt(calendar.getTime());
+
         try {
             this.memberInfoService.update(memberInfo);
             //添加订单
@@ -103,6 +112,7 @@ public class MemberOrderController {
             memberOrder.setBalance(nowAccount);
             String comment = request.getParameter("comment");
             memberOrder.setComments(comment);
+            memberOrder.setUpdatedDt(new Date());
             this.memberOrderService.insert(memberOrder);
             //添加记录
             //添加记录
@@ -124,7 +134,7 @@ public class MemberOrderController {
     @ResponseBody
     public PageResult<MemberOrderRechargeQuery> queryList(MemberOrderQuery query, HttpServletRequest request) {
         PageUtils<MemberOrderQuery> pageUtils = new PageUtils<MemberOrderQuery>();
-        query = pageUtils.sort(query, request, "crated_dt", "desc", null);
+        query = pageUtils.sort(query, request, "updated_dt", "desc", null);
         List<MemberOrderRechargeQuery> list = memberOrderService.query(query);
         PageResult<MemberOrderRechargeQuery> result = new PageResult<MemberOrderRechargeQuery>(new PageInfo<MemberOrderRechargeQuery>(list));
         return result;
