@@ -12,7 +12,9 @@
         bc.created_dt AS createdDt,
         bc.pay_type as payType ,
         bc.person as person,
-        bc.member_num as memberNum
+        bc.member_num as memberNum,
+        bc.type as type,
+        bc.source as source
         from book_customer bc ,( SELECT
         c.id AS cid,
         cp.id as pid,
@@ -42,6 +44,8 @@
         <if test="memberNum!=null and memberNum != ''">
             and bc.member_num  = #{memberNum}
         </if>
-        ORDER BY name ,startTime asc
+        <![CDATA[
+          ORDER BY area,name, startTime ASC
+         ]]>
     </select>
 </mapper>

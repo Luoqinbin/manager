@@ -27,7 +27,7 @@ define([
         __initDataTable:function () {
             var aoColumns = [
                 {"mData": "id"},
-                {"mData": "startTime"},
+                {"mData": "type"},
                 {"mData": "area"},
                 {"mData": "name"},
                 {"mData": "startTime"},
@@ -37,13 +37,18 @@ define([
                 {"mData": "phone"},
                 {"mData": "id"},
                 {"mData": "createdDt"},
-                {"mData": "memberNum"}
+                {"mData": "memberNum"},
+                {"mData": "source"}
             ];
             var aoColumnDefs = [{
                 "aTargets": [1],
                 "mRender": function (a, b, c, d) {
                     if (util.assertNotNullStr(a))
-                        return  moment(a).format("YYYY-MM-DD");
+                        if(a==1){
+                            return "普通场";
+                        }else{
+                            return"固定场";
+                        }
                     else
                         return "";
                 }
@@ -73,6 +78,26 @@ define([
                 "mRender": function (a, b, c, d) {
                     if (util.assertNotNullStr(a))
                         return  moment(a).format("YYYY-MM-DD");
+                    else
+                        return "";
+                }
+            },{
+                "aTargets": [10],
+                "mRender": function (a, b, c, d) {
+                    if (util.assertNotNullStr(a))
+                        return  moment(a).format("YYYY-MM-DD");
+                    else
+                        return "";
+                }
+            },{
+                "aTargets": [12],
+                "mRender": function (a, b, c, d) {
+                    if (util.assertNotNullStr(a))
+                        if(a==1){
+                            return "前台";
+                        }else{
+                            return"后台";
+                        }
                     else
                         return "";
                 }

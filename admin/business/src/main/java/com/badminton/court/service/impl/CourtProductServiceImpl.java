@@ -130,7 +130,7 @@ public class CourtProductServiceImpl implements CourtProductService {
                             this.courtProductMapper.updateByPrimaryKeySelective(c1);
                             //添加到订场表
                             BookCustomer customer = new BookCustomer();
-                            customer.setPrice(c.getPrice());
+                            customer.setPrice(fixedOrder.getPrice());
                             customer.setProductId(c.getId().toString());
                             customer.setPayType(Double.parseDouble(fixedOrder.getPayWay()));
                             customer.setMobile(fixedOrder.getPhone());
@@ -139,6 +139,7 @@ public class CourtProductServiceImpl implements CourtProductService {
                             customer.setRefundState(0);
                             customer.setPerson(fixedOrder.getName());
                             customer.setCreatedDt(new Date());
+                            customer.setType(2);
                             customer.setMemberNum(number);
                             long id = new TimestampPkGenerator().next(getClass());
                             customer.setId(id);

@@ -128,7 +128,7 @@ public class BookCustomerServiceImpl implements BookCustomerService{
             for (int i = 0; i < strIds.length; i++) {
                 BookCustomer customer = new BookCustomer();
                 customer.setProductId(strIds[i]);
-                customer.setCreatedDt(DateUtil.string2Date(date));
+                customer.setCreatedDt(new Date());
                 CourtProduct courtProduct = this.courtProductService.queryById(Long.parseLong(strIds[i]));
                 //customer.setPrice(courtProduct.getPrice());
                 customer.setPayType(Double.parseDouble(payType));
@@ -141,6 +141,7 @@ public class BookCustomerServiceImpl implements BookCustomerService{
                 customer.setId(new TimestampPkGenerator().next(getClass()));
                 customer.setMemberNum(number);
                 courtProduct.setState(3);
+                customer.setType(1);
                 customer.setNote(startTime + "-" + endTime);
                 this.courtProductService.update(courtProduct);
                 this.insert(customer);

@@ -73,6 +73,7 @@ public class MemberInfoController {
     public PageResult<MemberInfo> queryList(MemberInfoQuery query, HttpServletRequest request) {
         PageUtils<MemberInfoQuery> pageUtils = new PageUtils<MemberInfoQuery>();
         query = pageUtils.sort(query, request, "crated_dt", "desc", null);
+        query.setStatus(1);
         List<MemberInfo> list = memberInfoService.query(query);
         for(MemberInfo memberInfo:list){
            MemberCard memberCard = memberCardService.queryId(Long.parseLong(memberInfo.getType()+""));

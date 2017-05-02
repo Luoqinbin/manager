@@ -16,6 +16,8 @@ public class BookCustomerInfoQuery {
     private String phone;//预定人手机
     private String payType;//支付类型
     private String memberNum;
+    private Integer type ;
+    private Integer source;
 
     public Long getId() {
         return id;
@@ -111,5 +113,21 @@ public class BookCustomerInfoQuery {
 
     public void setMemberNum(String memberNum) {
         this.memberNum = memberNum;
+    }
+
+    public Integer getType() {
+        return type;
+    }
+
+    public void setType(Integer type) {
+        this.type = type;
+    }
+
+    public Integer getSource() {
+        return source;
+    }
+
+    public void setSource(Integer source) {
+        this.source = source;
     }
 }

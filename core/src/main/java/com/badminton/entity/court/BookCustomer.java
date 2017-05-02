@@ -13,7 +13,7 @@ public class BookCustomer extends BaseEntity{
     @Column(name = "product_id")
     private String         productId;
     @Column(name = "type")
-    private Double type;
+    private Integer type;
     @Column(name = "member_num")
     private String        memberNum;
     @Column(name = "name")
@@ -92,11 +92,11 @@ public class BookCustomer extends BaseEntity{
         this.productId = productId;
     }
 
-    public Double getType() {
+    public Integer getType() {
         return type;
     }
 
-    public void setType(Double type) {
+    public void setType(Integer type) {
         this.type = type;
     }
 
