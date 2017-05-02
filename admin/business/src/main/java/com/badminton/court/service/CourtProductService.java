@@ -23,4 +23,6 @@ public interface CourtProductService {
 
 
     public List<CourtProduct> queryByType(CourtProduct courtProduct);
+
+    public List<CourtProduct> queryTime(String area,String time);
 }

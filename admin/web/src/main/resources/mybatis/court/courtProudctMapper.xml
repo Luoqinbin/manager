@@ -12,4 +12,21 @@
             and c.state=1;
         ]]>
     </select>
+
+    <select id="queryTime" resultType="com.badminton.entity.court.CourtProduct" parameterType="map">
+        <![CDATA[
+            SELECT DISTINCT
+                cp.start_time AS startTime,
+                cp.end_time AS endTime
+            FROM
+                court_info c,
+                court_product cp
+            WHERE
+                c.id = cp.court_id
+            AND c.area = #{area}
+            AND cp.start_time >= '${time}'
+            AND cp.end_time <= CONCAT('${time}', '23:59:59')
+
+        ]]>
+    </select>
 </mapper>

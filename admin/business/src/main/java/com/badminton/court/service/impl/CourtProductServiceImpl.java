@@ -163,6 +163,11 @@ public class CourtProductServiceImpl implements CourtProductService {
         return this.courtProductMapper.select(courtProduct);
     }
 
+    @Override
+    public List<CourtProduct> queryTime(String area,String time) {
+        return courtProductMapper.queryTime(area,time);
+    }
+
     private List<Date> getBetweenDates(Date start, Date end) {
         List<Date> result = new ArrayList<Date>();
         Calendar tempStart = Calendar.getInstance();

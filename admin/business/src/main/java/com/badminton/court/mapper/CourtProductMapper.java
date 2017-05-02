@@ -12,4 +12,6 @@ import java.util.List;
 public interface CourtProductMapper extends BaseMapper<CourtProduct>{
 
     public List<CourtProduct> queryByTime(@Param(value = "start") String start, @Param(value = "end")String end , @Param(value = "courtInfoId")String courtInfoId);
+
+    public List<CourtProduct> queryTime(@Param(value = "area") String area,@Param(value = "time") String time);
 }

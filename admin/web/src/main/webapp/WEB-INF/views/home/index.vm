@@ -138,91 +138,33 @@
                                         <div class="form-body">
                                             <div class="form-group">
                                                 <label class="col-md-4 control-label">
-                                                    1 Schemes </label>
+                                                    日期： </label>
                                                 <div class="col-md-8">
-                                                    <div class="input-group">
-                                                        <ul class="icheck-colors">
-                                                            <li>
-                                                            </li>
-                                                            <li class="red">
-                                                            </li>
-                                                            <li class="green">
-                                                            </li>
-                                                            <li class="blue">
-                                                            </li>
-                                                            <li class="aero">
-                                                            </li>
-                                                            <li class="grey active">
-                                                            </li>
-                                                            <li class="orange">
-                                                            </li>
-                                                            <li class="pink">
-                                                            </li>
-                                                            <li class="purple">
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <label class="col-md-4 control-label">
-                                                    Checkbox List </label>
-                                                <div class="col-md-8">
-                                                    <div class="input-group">
-                                                        <div class="icheck-list">
-                                                            <label>
-                                                                <div class="icheckbox_minimal-grey" style="position: relative;"><input type="checkbox" class="icheck" style="position: absolute; opacity: 0;"><ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins></div> Checkbox 1 </label>
-                                                            <label>
-                                                                <div class="icheckbox_minimal-grey checked" style="position: relative;"><input type="checkbox" checked="" class="icheck" style="position: absolute; opacity: 0;"><ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins></div> Checkbox 2 </label>
-                                                            <label>
-                                                                <div class="icheckbox_minimal-grey" style="position: relative;"><input type="checkbox" class="icheck" style="position: absolute; opacity: 0;"><ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins></div> Checkbox 3 </label>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <label class="col-md-4 control-label">Inline</label>
-                                                <div class="col-md-8">
-                                                    <div class="input-group">
-                                                        <div class="icheck-inline">
-                                                            <label class="">
-                                                                <div class="icheckbox_minimal-grey" style="position: relative;"><input type="checkbox" class="icheck" style="position: absolute; opacity: 0;"><ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins></div> Checkbox 1 </label>
-                                                            <label>
-                                                                <div class="icheckbox_minimal-grey checked" style="position: relative;"><input type="checkbox" checked="" class="icheck" style="position: absolute; opacity: 0;"><ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins></div> Checkbox 2 </label>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <label class="col-md-4 control-label">Radio List</label>
-                                                <div class="col-md-8">
-                                                    <div class="input-group">
-                                                        <div class="icheck-list">
-                                                            <label class="">
-                                                                <div class="iradio_minimal-grey" style="position: relative;"><input type="radio" name="radio1" class="icheck" style="position: absolute; opacity: 0;"><ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins></div> Radio Button 1 </label>
-                                                            <label>
-                                                                <div class="iradio_minimal-grey checked" style="position: relative;"><input type="radio" name="radio1" checked="" class="icheck" style="position: absolute; opacity: 0;"><ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins></div> Radio Button 2 </label>
-                                                            <label>
-                                                                <div class="iradio_minimal-grey" style="position: relative;"><input type="radio" name="radio1" class="icheck" style="position: absolute; opacity: 0;"><ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins></div> Radio Button 3 </label>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <label class="col-md-4 control-label">Inline Radios</label>
-                                                <div class="col-md-8">
-                                                    <div class="input-group">
-                                                        <div class="icheck-inline">
-                                                            <label class="">
-                                                                <div class="iradio_minimal-grey" style="position: relative;"><input type="radio" name="radio2" class="icheck" style="position: absolute; opacity: 0;"><ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins></div> Radio Button 1 </label>
-                                                            <label>
-                                                                <div class="iradio_minimal-grey checked" style="position: relative;"><input type="radio" name="radio2" checked="" class="icheck" style="position: absolute; opacity: 0;"><ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins></div> Radio Button 2 </label>
-                                                        </div>
-                                                    </div>
+                                                    <select id="date">
+                                                        #foreach($item in $dateList)
+                                                            <option value="$item">$item</option>
+                                                        #end
+                                                    </select>
                                                 </div>
                                             </div>
                                         </div>
                                     </form>
+                                    <table id="table" class="table table-striped table-bordered table-hover" style="width: 99%" border="1" cellpadding="1" cellspacing="0">
+                                        <thead>
+                                        <tr id="th">
+                                        </tr>
+                                        </thead>
+                                        <tbody id="tbody">
+                                            #*#foreach($item in $list4FProduct)
+                                                <tr>
+                                                    <td>$!dateTool.format('HH:mm',$!item.startTime) </td>
+                                                    #foreach($item in $list4FArea)
+                                                        <td>1</td>
+                                                    #end
+                                                </tr>
+                                            #end*#
+                                        </tbody>
+                                    </table>
                                 </div>
                             </div>
                             <div class="tab-pane" id="portlet_tab_2_2">

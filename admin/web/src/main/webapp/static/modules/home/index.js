@@ -31,6 +31,7 @@ define([
                     }
                 });
             });
+            module.initTable();
         },
         initRecharge:function () {
             util.openLayer({
@@ -51,7 +52,6 @@ define([
                     util.post("home/queryInitRecharge", data).then(function (res) {
                         if (res.code == 200) {
                             var d = res.data;
-                            console.log(d);
                             layer.closeAll();
                             util.openLayer({
                                 area: '800px',
@@ -118,6 +118,38 @@ define([
                 },
                 cancel: function (index, layero) {
                     layer.close(index);
+                }
+            });
+        },
+        initTable:function () {
+            var data = util.getTokenData();
+            dojo.mixin(data, {"area": "4F","time":"2017-05-02"});
+            util.post("home/queryByHomeTable", data).then(function (res) {
+                if (res.code==200){
+                    var d = res.data;
+                    var list4FArea = d.list4FArea;
+                    var list4FProduct = d. list4FProduct;
+                    var th = $("#th");
+                    th.empty();
+                    var thStr = "<th></th>";
+                    for(var i=0;i<list4FArea.length;i++){
+                        thStr+="<th>"+list4FArea[i].area+" - "+list4FArea[i].name+"</th>"
+                    }
+                    th.append(thStr);
+                    var tbody = $("tbody");
+                    tbody.empty();
+                    var tbodyStr = "";
+                    for(var i=0;i<list4FProduct.length;i++){
+                         tbodyStr += "<tr>";
+                        tbodyStr+= " <td>"+moment(list4FProduct[i].startTime).format("HH:mm")+"</td>" ;
+                        for(var j=0;j<list4FArea.length;j++){
+
+                            tbodyStr +="<td>1</td>";
+
+                        }
+                        tbodyStr+="</tr>";
+                    }
+                    tbody.append(tbodyStr);
                 }
             });
         },
