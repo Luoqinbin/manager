@@ -96,7 +96,7 @@ define([
                         if(a==1){
                             return "前台";
                         }else{
-                            return"后台";
+                            return "后台";
                         }
                     else
                         return "";
