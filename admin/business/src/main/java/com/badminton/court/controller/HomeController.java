@@ -1,11 +1,15 @@
 package com.badminton.court.controller;
 
 import com.badminton.court.mapper.HomeMapper;
+import com.badminton.court.service.BookCustomerService;
 import com.badminton.court.service.CourtInfoService;
 import com.badminton.court.service.CourtProductService;
 import com.badminton.court.service.HomeService;
+import com.badminton.entity.court.BookCustomer;
 import com.badminton.entity.court.CourtInfo;
 import com.badminton.entity.court.CourtProduct;
+import com.badminton.entity.court.query.BookCustomerInfoQuery;
+import com.badminton.entity.court.query.BookCustomerQuery;
 import com.badminton.entity.member.MemberCard;
 import com.badminton.entity.member.MemberInfo;
 import com.badminton.entity.system.SysUser;
@@ -47,7 +51,8 @@ public class HomeController {
     private CourtInfoService courtInfoService;
     @Autowired
     private CourtProductService courtProductService;
-
+    @Autowired
+    private BookCustomerService bookCustomerService;
 
     @RequestMapping("index")
     public String index(HttpServletRequest request){
@@ -96,9 +101,14 @@ public class HomeController {
         List<CourtInfo> list4FArea = courtInfoService.query(courtInfo);
         map.put("list4FArea",list4FArea);
         //查询时间
-        List<CourtProduct> list4FProduct = courtProductService.queryTime("4F",StringUtils.isNotEmpty(time)?time:DateUtil.date2String(new Date()));
+        List<CourtProduct> list4FProduct = courtProductService.queryTime(area,StringUtils.isNotEmpty(time)?time:DateUtil.date2String(new Date()));
         map.put("list4FProduct",list4FProduct);
-
+        //查询订场数据
+        BookCustomer customer = new BookCustomer();
+        customer.setCreatedDtQuery(time);
+        customer.setArea(area);
+        List<BookCustomerInfoQuery> customerList = bookCustomerService.query(customer);
+        map.put("customerList",customerList);
         baseResult.setCode(BaseResult.CODE_OK);
         baseResult.setData(map);
         return baseResult;

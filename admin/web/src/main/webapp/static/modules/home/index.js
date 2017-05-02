@@ -129,6 +129,8 @@ define([
                     var d = res.data;
                     var list4FArea = d.list4FArea;
                     var list4FProduct = d. list4FProduct;
+                    var customerList = d.customerList;
+
                     var th = $("#th");
                     th.empty();
                     var thStr = "<th></th>";
@@ -136,12 +138,16 @@ define([
                         thStr+="<th>"+list4FArea[i].area+" - "+list4FArea[i].name+"</th>"
                     }
                     th.append(thStr);
+
                     var tbody = $("tbody");
                     tbody.empty();
                     var tbodyStr = "";
                     for(var i=0;i<list4FProduct.length;i++){
                          tbodyStr += "<tr>";
-                        tbodyStr+= " <td>"+moment(list4FProduct[i].startTime).format("HH:mm")+"</td>" ;
+                         var tt = moment(list4FProduct[i].startTime).format("HH:mm");
+                         var ett = moment(list4FProduct[i].endTime).format("HH");
+                         tbodyStr+= " <td>"+tt+"</td>" ;
+                         tt = moment(list4FProduct[i].startTime).format("HH");
                         for(var j=0;j<list4FArea.length;j++){
 
                             tbodyStr +="<td>1</td>";
