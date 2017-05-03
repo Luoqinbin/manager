@@ -19,6 +19,7 @@
         c.id AS cid,
         cp.id as pid,
         c. NAME AS NAME,
+        cp.court_id AS courtId,
         c.area AS area,
         cp.start_time AS startTime,
         cp.end_time AS endTime

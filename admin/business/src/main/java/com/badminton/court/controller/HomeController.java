@@ -95,7 +95,7 @@ public class HomeController {
         Map<String,Object> map = new HashedMap();
         //获得楼层的所以场地
         CourtInfo courtInfo = new CourtInfo();
-        courtInfo.setArea("4F");
+        courtInfo.setArea(area);
         courtInfo.setOrderColumn("name");
         courtInfo.setOrderDir("asc");
         List<CourtInfo> list4FArea = courtInfoService.query(courtInfo);
@@ -103,6 +103,9 @@ public class HomeController {
         //查询时间
         List<CourtProduct> list4FProduct = courtProductService.queryTime(area,StringUtils.isNotEmpty(time)?time:DateUtil.date2String(new Date()));
         map.put("list4FProduct",list4FProduct);
+        List<CourtProduct> listProduct = courtProductService.queryTime1(area,StringUtils.isNotEmpty(time)?time:DateUtil.date2String(new Date()));
+        map.put("listProduct",listProduct);
+
         //查询订场数据
         BookCustomer customer = new BookCustomer();
         customer.setCreatedDtQuery(time);

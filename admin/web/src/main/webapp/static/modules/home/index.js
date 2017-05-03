@@ -31,7 +31,16 @@ define([
                     }
                 });
             });
-            module.initTable();
+            module.initTable('4F',$("#date").val());
+            $("#date").bind("change",function () {
+                var area = "";
+                $(".nav-tabs").find("li").each(function(){
+                    if($(this).attr("class")=="active"){
+                        area = $.trim($(this).find("a").text());
+                    }
+                });
+                module.initTable(area,$(this).val());
+            })
         },
         initRecharge:function () {
             util.openLayer({
@@ -121,16 +130,16 @@ define([
                 }
             });
         },
-        initTable:function () {
+        initTable:function (area,time) {
             var data = util.getTokenData();
-            dojo.mixin(data, {"area": "4F","time":"2017-05-02"});
+            dojo.mixin(data, {"area": area,"time":time});
             util.post("home/queryByHomeTable", data).then(function (res) {
                 if (res.code==200){
                     var d = res.data;
                     var list4FArea = d.list4FArea;
                     var list4FProduct = d. list4FProduct;
+                    var listProduct = d.listProduct;
                     var customerList = d.customerList;
-
                     var th = $("#th");
                     th.empty();
                     var thStr = "<th></th>";
@@ -145,17 +154,27 @@ define([
                     for(var i=0;i<list4FProduct.length;i++){
                          tbodyStr += "<tr>";
                          var tt = moment(list4FProduct[i].startTime).format("HH:mm");
-                         var ett = moment(list4FProduct[i].endTime).format("HH");
-                         tbodyStr+= " <td>"+tt+"</td>" ;
-                         tt = moment(list4FProduct[i].startTime).format("HH");
+                         var ett = moment(list4FProduct[i].endTime).format("HH:mm");
+                         tbodyStr+= " <td>"+tt+"-"+ett+"</td>" ;
                         for(var j=0;j<list4FArea.length;j++){
-
-                            tbodyStr +="<td>1</td>";
+                            var index = i * list4FArea.length + j;
+                            tbodyStr +="<td data-id='"+listProduct[index].courtId+"' data-pid='"+listProduct[index].pid+"'></td>";
 
                         }
                         tbodyStr+="</tr>";
                     }
                     tbody.append(tbodyStr);
+                    $("#tbody").find("tr").each(function(i,o){
+                        $(this).find("td").each(function(i){
+                            var pid = ($(this).attr("data-pid"));
+                            for(var h = 0;h<customerList.length;h++){
+                                if(customerList[h].pid == pid){
+                                    $(this).attr("bgcolor","gray");
+                                    break;
+                                }
+                            }
+                        })
+                    });
                 }
             });
         },

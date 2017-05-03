@@ -33,11 +33,15 @@ public class CourtProduct extends BaseEntity{
     @Transient
     private String area;
     @Transient
+    private String name;
+    @Transient
     private String addr;
     @Transient
     private String startTimeQuery;
     @Transient
     private String endTimeQuery;
+    @Transient
+    private String pid;
 
     public String getStartTimeQuery() {
         return startTimeQuery;
@@ -141,5 +145,21 @@ public class CourtProduct extends BaseEntity{
 
     public void setAddr(String addr) {
         this.addr = addr;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getPid() {
+        return pid;
+    }
+
+    public void setPid(String pid) {
+        this.pid = pid;
     }
 }
