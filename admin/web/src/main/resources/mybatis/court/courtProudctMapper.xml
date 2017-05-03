@@ -36,8 +36,8 @@
             SELECT DISTINCT
                 c.area as area,
 	            c.`Name` as name,
-	            cp.court_id as courtId,
-	            cp.id as pid,
+	            ifnull(cp.court_id,'') as courtId,
+	             ifnull(cp.id,'') as pid,
                 cp.start_time AS startTime,
                 cp.end_time AS endTime
             FROM

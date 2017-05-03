@@ -31,7 +31,8 @@ define([
                     }
                 });
             });
-            module.initTable('4F',$("#date").val());
+            //module.initTable('4F',$("#date").val(),$("#th"),$("#tbody"));
+            module.initTable('5F',$("#date5F").val(),$("#th5F"),$("#tbody5F"));
             $("#date").bind("change",function () {
                 var area = "";
                 $(".nav-tabs").find("li").each(function(){
@@ -39,7 +40,7 @@ define([
                         area = $.trim($(this).find("a").text());
                     }
                 });
-                module.initTable(area,$(this).val());
+                module.initTable(area,$(this).val(),$("#th"),$("#tbody"));
             });
 
             $("#fixOrder").bind("click",function () {
@@ -212,7 +213,7 @@ define([
                 }
             });
         },
-        initTable:function (area,time) {
+        initTable:function (area,time,th,tbody) {
             var data = util.getTokenData();
             dojo.mixin(data, {"area": area,"time":time});
             util.post("home/queryByHomeTable", data).then(function (res) {
@@ -222,7 +223,8 @@ define([
                     var list4FProduct = d. list4FProduct;
                     var listProduct = d.listProduct;
                     var customerList = d.customerList;
-                    var th = $("#th");
+                    //var th = $("#th");
+                    console.log(list4FArea.length);
                     th.empty();
                     var thStr = "<th></th>";
                     for(var i=0;i<list4FArea.length;i++){
@@ -230,7 +232,7 @@ define([
                     }
                     th.append(thStr);
 
-                    var tbody = $("#tbody");
+                   // var tbody = $("#tbody");
                     tbody.empty();
                     var tbodyStr = "";
                     for(var i=0;i<list4FProduct.length;i++){
@@ -238,11 +240,10 @@ define([
                          var tt = moment(list4FProduct[i].startTime).format("HH:mm");
                          var ett = moment(list4FProduct[i].endTime).format("HH:mm");
                          tbodyStr+= " <td>"+tt+"-"+ett+"</td>" ;
-                        for(var j=0;j<list4FArea.length;j++){
+                        for(var j=0;j<list4FArea.length;j++) {
                             var index = i * list4FArea.length + j;
-                            tbodyStr +="<td class='tdContent' data-area='"+list4FArea[j].area+"' data-name='"+list4FArea[j].name+"'" +
-                                " data-startTime='"+tt+"' data-endTime ='"+ett+"' data-id='"+listProduct[index].courtId+"' data-pid='"+listProduct[index].pid+"'></td>";
-
+                                tbodyStr += "<td class='tdContent' data-area='" + list4FArea[j].area + "' data-name='" + list4FArea[j].name + "'" +
+                                " data-startTime='" + tt + "' data-endTime ='" + ett + "' data-id='" + listProduct[index].courtId + "' data-pid='" + listProduct[index].pid + "'></td>";
                         }
                         tbodyStr+="</tr>";
                     }
