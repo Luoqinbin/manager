@@ -51,6 +51,8 @@ public class BookCustomer extends BaseEntity{
     private String createdDtQuery;
     @Transient
     private String areaQuery;
+    @Transient
+    private String pid;
 
     public String getAreaQuery() {
         return areaQuery;
@@ -210,5 +212,13 @@ public class BookCustomer extends BaseEntity{
 
     public void setPerson(String person) {
         this.person = person;
+    }
+
+    public String getPid() {
+        return pid;
+    }
+
+    public void setPid(String pid) {
+        this.pid = pid;
     }
 }

@@ -42,6 +42,9 @@
         <if test="nameInfo!=null and nameInfo != ''">
             and v.name = #{nameInfo}
         </if>
+        <if test="pid!=null and pid != ''">
+            and v.pid = #{pid}
+        </if>
         <if test="memberNum!=null and memberNum != ''">
             and bc.member_num  = #{memberNum}
         </if>

@@ -8,6 +8,7 @@ define([
     "modules/common/tools/moment"
 ], function (dojo, util,datastore,moment) {
     var validate = null;
+    var timer = null;
     var module = {
         initPage: function () {
             validate = module.validateForm();
@@ -31,7 +32,7 @@ define([
                     }
                 });
             });
-            //module.initTable('4F',$("#date").val(),$("#th"),$("#tbody"));
+           // module.initTable('4F',$("#date").val(),$("#th"),$("#tbody"));
             module.initTable('5F',$("#date5F").val(),$("#th5F"),$("#tbody5F"));
             $("#date").bind("change",function () {
                 var area = "";
@@ -71,6 +72,8 @@ define([
 
                 module.yud(pid,time,startTime,endTime,area,name);
             });
+
+
         },
         initRecharge:function () {
             util.openLayer({
@@ -261,20 +264,72 @@ define([
                         })
                     });
                     $(".tdContent").click(function(){
-                        var courtId = ($(this).attr("data-id"));
-                        var clicked =  $(this).attr("clicked");
-                        if(clicked == 'true'){
-                            $(this).attr("clicked", false).css("background-color", "");
-                        }else{
-                            $("#tbody").find("tr").each(function(i,o){
-                                $(this).find("td").each(function(i){
-                                    $(this).css("background-color", "");
-                                })
-                            });
-                            $(this).attr("clicked", true).css("background-color", "#CB5A5E");
-                        }
+                        clearTimeout(timer);
+                        var that = $(this);
+                        timer = setTimeout(function() {
+                            var courtId = (that.attr("data-id"));
+                            var clicked =  that.attr("clicked");
+                            if(clicked == 'true'){
+                                that.attr("clicked", false).css("background-color", "");
+                            }else{
+                                $("#tbody").find("tr").each(function(i,o){
+                                    $(this).find("td").each(function(i){
+                                        $(this).css("background-color", "");
+                                    })
+                                });
+                                that.attr("clicked", true).css("background-color", "#CB5A5E");
+                            }
+                        },300);
 
+                    }).dblclick(function () {
+                        clearTimeout(timer);
+                        var fix = $(this).attr("fix");
+                        if(fix=="true"){
+                            var pid = $(this).attr("data-pid");
+                            module.detail(pid);
+                        }
                     });
+                }
+            });
+        },
+        detail:function (pid) {
+            util.openLayer({
+                area: '800px',
+                shade: [0.8, '#393D49'],
+                title: "查看详细",
+                type: 1,
+                content: $("#detailWin"),
+                btn: [ '关闭'],
+                success: function (layero, index) {
+                    var data = util.getTokenData();
+                    dojo.mixin(data, {"pid": pid});
+                    util.post("bookCustomer/queryByPid", data).then(function (res) {
+                        if(res.code==200){
+                            var d = res.data;
+                            var detailWinTbody = $("#detailWinTbody");
+                            var tr="";
+                            for(var i=0;i<d.length;i++){
+
+                                tr+="<tr><td>"+d[i].id+"</td>" +
+                                    "<td>"+d[i].area+"-"+d[i].name+" </td>" +
+                                    "<td>"+moment(d[i].startTime).format("HH:mm")+" </td>" +
+                                    "<td>"+moment(d[i].endTime).format("HH:mm")+" </td>" +
+                                    "<td>"+d[i].payType+" </td>" +
+                                    "<td>"+d[i].person+" </td>" +
+                                    "<td>"+d[i].phone+" </td>" +
+                                    "<td>"+d[i].memberNum+" </td>" +
+                                    "<td>"+moment(d[i].createdDt).format("YYYY-MM-DD")+" </td>" +
+                                    "</tr>";
+                            }
+                            detailWinTbody.append(tr);
+                        }
+                    });
+                },
+                yes: function (layero, index) {
+                    layer.close(index);
+                },
+                cancel: function (index, layero) {
+                    layer.close(index);
                 }
             });
         },

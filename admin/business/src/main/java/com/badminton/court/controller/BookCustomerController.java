@@ -113,6 +113,19 @@ public class BookCustomerController {
         PageResult<BookCustomerInfoQuery> result = new PageResult<BookCustomerInfoQuery>(new PageInfo<BookCustomerInfoQuery>(list));
         return result;
     }
+    @RequestMapping(value = "queryByPid", method = RequestMethod.POST)
+    @ResponseBody
+    public BaseResult queryByPid(String pid){
+        BaseResult baseResult = new BaseResult();
+        BookCustomerQuery query = new BookCustomerQuery();
+        query.setPid(pid);
+        List<BookCustomerInfoQuery> list = bookCustomerService.query(query);
+        baseResult.setCode(BaseResult.CODE_OK);
+        baseResult.setData(list);
+        return baseResult;
+    }
+
+
     @RequestMapping(value = "selectByData", method = RequestMethod.POST)
     @ResponseBody
     public BaseResult selectByData(String date,String id){
